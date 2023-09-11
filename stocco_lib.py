@@ -8,15 +8,15 @@ import numpy as np
 def compute_rates(x, s, mu):
 
 
-    a = np.zeros(x.size)
-    m = x.size
+    m = x.shape[0]
+    a = np.zeros(m)
 
 
     # computing rates of birth/death events
     norm = np.sum((1+s)*x)
     for j in range(m):
-        a[(j-1)*(m-1):j*(m-1)] = (1+np.delete(a, j)) * np.delete(x, j)
-        a[(j-1)*(m-1):j*(m-1)] *= x[j]
+        a[j*(m-1):(j+1)*(m-1)] = (1+np.delete(a, j)) * np.delete(x, j)
+        a[j*(m-1):(j+1)*(m-1)] *= x[j]
     a[:m*(m-1)] /= norm
 
 
@@ -56,7 +56,7 @@ def Gillespie_extract(a):
 
 
     a_tot = np.sum(a)
-    m_2 = a.size  # number of possible events
+    m_2 = a.shape[0]   # number of possible events
 
 
     u = np.random.uniform()*a_tot
@@ -68,7 +68,7 @@ def Gillespie_extract(a):
     for i in range(1, m_2):
         a_cum[i] = a_cum[i-1] + a[i]
 
-    
+
     # extracting the index (we use a sort of binary search strategy)
     found = False
     index = int(m_2/2)
@@ -97,18 +97,18 @@ def tau_leap_extract(a, h):
 
 # updates the system state (to be used with both Gillespie and tau 
 # leaping algorithms: variable algo)
-def state_update(x, v, r, index, algo):
-
-
-    if algo=='Gillespie':
-
-        x += v[index]
-
-
-    elif algo=='tau_leap':
-
-        for i in index:
-            x += r[i] * v[i]
-
-
-    return x
+#def state_update(x, v, r, index, algo):
+#
+#
+#    if algo=='Gillespie':
+#
+#        x += v[index]
+#
+#
+#    elif algo=='tau_leap':
+#
+#        for i in index:
+#            x += r[i] * v[i]
+#
+#
+#    return x
