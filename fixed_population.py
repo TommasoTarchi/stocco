@@ -1,5 +1,6 @@
 import numpy as np
 import stocco_lib as stclb
+import time
 
 
 
@@ -7,9 +8,13 @@ if __name__ == "__main__":
 
 
 
+    start_time = time.time()
+
+
+
     # parameters setting
 
-    N = 10000   # population size
+    N = 100000   # population size
     m = 100   # number of genotipic classes
     N_c = 10   # threshold for population size
     epsilon = 0.04   # parameter of the leaping condition 
@@ -54,27 +59,40 @@ if __name__ == "__main__":
     while m_temp != m+1:
 
 
+        ########################
+        print(t)
+        print(m_temp)
+        ########################
+
+
         # computing the events rates
         a = stclb.compute_rates(x[:m_temp], s[:m_temp], mu[:m_temp])
 
 
         # partitioning the set of events in non-critical and critical ones
 
-        sigma = np.where(x[:x_temp] <= N_c)[0]   # small population classes
+        sigma = np.where(x[:m_temp] <= N_c)[0]   # small population classes
 
         OMEGA = list(range(m_temp**2))   # non-critical set
         LAMBDA = []   # critical set
         for i in sigma:
             for j in range(i):
-                OMEGA.remove(j*(m-1)+i-1)
-                LAMBDA.append(j*(m-1)+i-1)
-            for j in range(i*(m-1), (i+1)*(m-1)):
+                OMEGA.remove(j*(m_temp-1)+i-1)
+                LAMBDA.append(j*(m_temp-1)+i-1)
+            for j in range(i*(m_temp-1), (i+1)*(m_temp-1)):
                 OMEGA.remove(j)
                 LAMBDA.append(j)
             for j in range(i+1, m_temp*(m_temp-1)):
-                OMEGA.remove(j*(m-1)+i)
-                LAMBDA.append(j*(m-1)+i)
+                OMEGA.remove(j*(m_temp-1)+i)
+                LAMBDA.append(j*(m_temp-1)+i)
         LAMBDA.sort()
+
+
+        ####################
+        #print("fin qua ci siamo")
+        #print()
+        ####################
+
 
         a_ncrit = a[OMEGA]
         a_crit = a[LAMBDA]
@@ -84,9 +102,19 @@ if __name__ == "__main__":
 
         tau = stclb.compute_tau(epsilon)
 
-        e = stclb.compute_e(a_crit)
+        e = tau + 1
+        if a_crit.shape[0] > 0:
+            e = stclb.compute_e(a_crit)
 
         h = min(tau, e)
+
+
+
+        ####################
+        #print("fin qua ci siamo")
+        #print()
+        ####################
+
 
 
         # using the Gillespie algorithm (if any critical events occurred)
@@ -112,6 +140,14 @@ if __name__ == "__main__":
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)
+
+
+
+        ####################
+        print("fin qua ci siamo")
+        print()
+        ####################
+
 
         
         # using the tau-leap algorithm
@@ -139,3 +175,12 @@ if __name__ == "__main__":
         t += h
         if x[m_temp] > 0:
             m_temp += 1
+
+
+
+    elapsed_time = start_time - time.time()
+
+
+    
+    # printing final state and time 
+    print(f"final state:\n{x}\n\nfinal time:  {t}\n\nelapsed simulation time:  {elapsed_time}\n")
