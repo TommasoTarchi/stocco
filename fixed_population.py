@@ -14,8 +14,8 @@ if __name__ == "__main__":
 
     # parameters setting
 
-    N = 100000   # population size
-    m = 100   # number of genotipic classes
+    N = 1000   # population size
+    m = 4   # number of genotipic classes
     N_c = 10   # threshold for population size
     epsilon = 0.04   # parameter of the leaping condition 
 
@@ -57,12 +57,20 @@ if __name__ == "__main__":
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
     while m_temp != m+1:
+        
 
-
-        ########################
-        print(t)
-        print(m_temp)
-        ########################
+        #####################
+        #print(m_temp)
+        #print(t)
+        #if t == 0:
+        #    f = open("states.dat", "w")
+        #    f.close()
+        #if t % 20 < 0.1:           
+        #    f = open("states.dat", "a")
+        #    f.write(f"{x}\n")
+        #    f.close()
+        #print(f"x:  {x}")
+        #####################
 
 
         # computing the events rates
@@ -77,21 +85,22 @@ if __name__ == "__main__":
         LAMBDA = []   # critical set
         for i in sigma:
             for j in range(i):
-                OMEGA.remove(j*(m_temp-1)+i-1)
-                LAMBDA.append(j*(m_temp-1)+i-1)
+                pos = j*(m_temp-1)+i-1
+                if pos in OMEGA:
+                    OMEGA.remove(pos)
+                    LAMBDA.append(pos)
             for j in range(i*(m_temp-1), (i+1)*(m_temp-1)):
-                OMEGA.remove(j)
-                LAMBDA.append(j)
-            for j in range(i+1, m_temp*(m_temp-1)):
-                OMEGA.remove(j*(m_temp-1)+i)
-                LAMBDA.append(j*(m_temp-1)+i)
+                if j in OMEGA:
+                    OMEGA.remove(j)
+                    LAMBDA.append(j)
+            for j in range(i+1, m_temp):
+                pos = j*(m_temp-1)+i
+                if pos in OMEGA:
+                    OMEGA.remove(pos)
+                    LAMBDA.append(pos)
+            OMEGA.remove(m_temp*(m_temp-1)+i)
+            LAMBDA.append(m_temp*(m_temp-1)+i)
         LAMBDA.sort()
-
-
-        ####################
-        #print("fin qua ci siamo")
-        #print()
-        ####################
 
 
         a_ncrit = a[OMEGA]
@@ -103,27 +112,20 @@ if __name__ == "__main__":
         tau = stclb.compute_tau(epsilon)
 
         e = tau + 1
-        if a_crit.shape[0] > 0:
+        if a_crit.shape[0] > 0 and np.sum(a_crit) > 0:
             e = stclb.compute_e(a_crit)
-
+        
         h = min(tau, e)
-
-
-
-        ####################
-        #print("fin qua ci siamo")
-        #print()
-        ####################
-
 
 
         # using the Gillespie algorithm (if any critical events occurred)
         if e < tau:
 
+ 
             # computing the index of the event
 
             index = LAMBDA[stclb.Gillespie_extract(a_crit)]
-
+            
             
             # updating the state (we do it directly without using the state-change
             # vector)
@@ -140,14 +142,6 @@ if __name__ == "__main__":
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)
-
-
-
-        ####################
-        print("fin qua ci siamo")
-        print()
-        ####################
-
 
         
         # using the tau-leap algorithm
@@ -168,7 +162,6 @@ if __name__ == "__main__":
                 x[index-m_temp*(m_temp-1)+1] += r[i]
 
             i += 1
-
         
 
         # updating time and 'highest' genotipic class reached so far
@@ -178,9 +171,9 @@ if __name__ == "__main__":
 
 
 
-    elapsed_time = start_time - time.time()
+    elapsed_time = time.time() - start_time
 
 
     
     # printing final state and time 
-    print(f"final state:\n{x}\n\nfinal time:  {t}\n\nelapsed simulation time:  {elapsed_time}\n")
+    print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time}\n")

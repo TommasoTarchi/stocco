@@ -54,33 +54,46 @@ def compute_e(a):
 def Gillespie_extract(a):
 
 
+    # selecting only a's elements that are different from zero
+    good_indexes = np.where(a>0)[0]
+    a_good = a[good_indexes]
+
     a_tot = np.sum(a)
-    m_2 = a.shape[0]   # number of possible events
+    m_2 = a_good.shape[0]   # number of possible events
 
 
-    u = np.random.uniform()*a_tot
+    u = np.random.uniform() * a_tot
 
     
     # computing 'cumulative' rates
     a_cum = np.zeros(m_2)
-    a_cum[0] = a[0]
+    a_cum[0] = a_good[0]
     for i in range(1, m_2):
-        a_cum[i] = a_cum[i-1] + a[i]
-
+        a_cum[i] = a_cum[i-1] + a_good[i]
+           
 
     # extracting the index (we use a sort of binary search strategy)
+    #found = False
+    #index = m_2//2
+    #while (not found) and index>0:
+    #    if a_cum[index-1]<=u and u<a_cum[index]:
+    #        found = True
+    #    elif u<a_cum[index-1]:
+    #        index = index//2
+    #    else:
+    #        index += (m_2-index)//2
+
+
     found = False
-    index = int(m_2/2)
-    while (not found) and index>0:
-        if a_cum[index-1]<=u and u<a[index]:
+    index = 0
+    while not found:
+        if u < a_cum[index]:
             found = True
-        elif u<a_cum[index-1]:
-            index = int(index/2)
         else:
-            index = index + int((m_2-index)/2)
+            index += 1
 
 
-    return index
+    return good_indexes[index]
 
 
 
