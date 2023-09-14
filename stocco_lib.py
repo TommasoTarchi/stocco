@@ -71,26 +71,19 @@ def Gillespie_extract(a):
     for i in range(1, m_2):
         a_cum[i] = a_cum[i-1] + a_good[i]
            
-
-    # extracting the index (we use a sort of binary search strategy)
+    
+    # extracting the index (naive algorithm)
     #found = False
-    #index = m_2//2
-    #while (not found) and index>0:
-    #    if a_cum[index-1]<=u and u<a_cum[index]:
+    #index = 0
+    #while not found:
+    #    if u < a_cum[index]:
     #        found = True
-    #    elif u<a_cum[index-1]:
-    #        index = index//2
     #    else:
-    #        index += (m_2-index)//2
+    #        index += 1
 
 
-    found = False
-    index = 0
-    while not found:
-        if u < a_cum[index]:
-            found = True
-        else:
-            index += 1
+    # extracting the index (recursive algorithm)
+    index = find_index(u, a_cum)
 
 
     return good_indexes[index]
@@ -98,8 +91,27 @@ def Gillespie_extract(a):
 
 
 
+# extracts events happened during a tau-leap step
 def tau_leap_extract(a, h):
 
     r = np.random.poisson(lam=a*h)
 
     return r
+
+
+
+
+# function for the recursive algorithm used in Gillespie_extract()
+def find_index(u, a_cum):
+
+        index = a_cum.shape[0] // 2
+        
+        if index == 0:
+            return index
+        
+        if u < a_cum[index-1]:
+            index = find_index(u, a_cum[:index-1])
+        elif a_cum[index] < u:
+            index += find_index(u, a_cum[index+1:])
+        
+        return index

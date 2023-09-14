@@ -1,6 +1,19 @@
 import numpy as np
 import stocco_lib as stclb
+import argparse
 import time
+
+
+
+
+# default parameters
+N_deflt = 10000   # population size
+m_deflt = 4   # number of genotipic classes
+N_c_deflt = 10   # population threshold for exact evolution (i.e. use of
+                 # Gillespie algorithm)
+epsilon_deflt = 0.04   # parameter of the leaping condition
+fitness_deflt = 'flat'   # kind of fitness distribution over genotipic space
+
 
 
 
@@ -8,49 +21,39 @@ if __name__ == "__main__":
 
 
 
-    start_time = time.time()
-
-
-
     # parameters setting
 
-    N = 1000   # population size
-    m = 4   # number of genotipic classes
-    N_c = 10   # threshold for population size
-    epsilon = 0.04   # parameter of the leaping condition 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-N', type=int, default=N_deflt)
+    parser.add_argument('-m', type=int, default=m_deflt)
+    parser.add_argument('-N_c', type=int, default=N_c_deflt)
+    parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
+    parser.add_argument('--fitness', choices=[fitness_deflt, ], default=fitness_deflt)
 
-    t = 0   # time
+    args = parser.parse_args()
 
-    # setting initial distribution of population in genotipic
-    # space and assigning fitness and mutation rates to genotipic
-    # classes
-    x = np.zeros(m+1)   # genotipic distribution
+    N = args.N
+    m = args.m
+    N_c = args.N_c
+    epsilon = args.epsilon
+
+    # population distribution in genotipic space
+    x = np.zeros(m+1)
     x[0] = N
-    s = np.zeros(m)   # fitness distribution
+
+    # fitness distribution in genotipic space
+    if args.fitness == 'flat':
+        s = np.zeros(m)
+
     mu = np.full(m, 1/N)   # mutation rate distribution
 
+    t = 0   # time
+   
 
 
-    # initializing the state-change vector
+    # for efficiency measure
+    start_time = time.time()
 
-    #v = np.zeros((m**2, m+1))
-
-    # initializing death/birth events
-    #for i in range(m):
-    #    for j in range(i):
-    #        v[i*m+j, i] = -1
-    #        v[i*m+j, j] = 1
-    #    for j in range(i, m-1):
-    #        v[i*m+j, i] = -1
-    #        v[i*m+j, j+1] = 1
-
-    # initializing mutation events
-    #for i in range(m*(m-1), m**2):
-    #    ind = 0
-    #    v[ind, ind] = -1
-    #    v[ind, ind+1] = 1
-    #    ind += 1 
-    
 
 
     # main loop (evolution)
@@ -58,20 +61,6 @@ if __name__ == "__main__":
     m_temp = 1   # 'highest' genotipic class reached so far plus one
     while m_temp != m+1:
         
-
-        #####################
-        #print(m_temp)
-        #print(t)
-        #if t == 0:
-        #    f = open("states.dat", "w")
-        #    f.close()
-        #if t % 20 < 0.1:           
-        #    f = open("states.dat", "a")
-        #    f.write(f"{x}\n")
-        #    f.close()
-        #print(f"x:  {x}")
-        #####################
-
 
         # computing the events rates
         a = stclb.compute_rates(x[:m_temp], s[:m_temp], mu[:m_temp])
@@ -171,9 +160,10 @@ if __name__ == "__main__":
 
 
 
+    # for efficieny measure
     elapsed_time = time.time() - start_time
 
 
     
     # printing final state and time 
-    print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time}\n")
+    print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time} s\n")
