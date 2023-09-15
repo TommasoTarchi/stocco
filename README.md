@@ -1,8 +1,7 @@
 # stocco
 
-This is Stocco, final project for the exam Stochastic Modelling and Simulation, part of the MSc in Data Science and Scientific Computing 
-at Uiversity of Trieste/SISSA. The aim is that of reproducing the simulations results exposed in the 
-[paper](Zhu-Efficient_simul_population_model_carcinogenesis.pdf) you can find in this repository, and (possibly) extend them.
+This is **stocco**, final project for the exam Stochastic Modelling and Simulation, part of the MSc in Data Science and Scientific Computing 
+at Uiversity of Trieste/SISSA. The aim is that of reproducing the simulations results exposed in [this paper](Zhu-Efficient_simul_population_model_carcinogenesis.pdf) and (possibly) extend them.
 
 
 ## What you will find in this repository
