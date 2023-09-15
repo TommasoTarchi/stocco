@@ -7,21 +7,21 @@
 #SBATCH --time=02:00:00
 
 
-module load architecture/Intel
-module load conda/23.3.1
+#module load architecture/Intel
+#module load conda/23.3.1
 
-conda activate stoch_modelling
+#conda activate stoch_modelling
 
 
 datafile=$(pwd)/algo_comparison.csv
 
 echo "# data for simulation time and efficiency comparision between" > "$datafile"
-echo "# exact and hybrid algorithms" > "$datafile"
-echo "#" > "$datafile"
-echo "# fitness landscape: static increasing" > "$datafile"
-echo "# number of genotipic classes = 20" > "$datafile"
-echo "# population size = 1000" > "$datafile"
-echo "# " > "$datafile"
+echo "# exact and hybrid algorithms" >> "$datafile"
+echo "#" >> "$datafile"
+echo "# fitness landscape: static increasing" >> "$datafile"
+echo "# number of genotipic classes: 20" >> "$datafile"
+echo "# population size: 1000" >> "$datafile"
+echo "# " >> "$datafile"
 
 echo "exact_simulation,exact_elapsed,hybrid_simulation,hybrid_elapsed" >> "$datafile"
 for index in {1..10}
@@ -33,4 +33,4 @@ do
 done 
 
 
-module purge
+#module purge
