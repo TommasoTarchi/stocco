@@ -8,6 +8,9 @@
 
 
 module load architecture/Intel
+module load conda/23.3.1
+
+conda activate stoch_modelling
 
 
 datafile=$(pwd)/algo_comparison.csv
