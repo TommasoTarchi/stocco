@@ -1,18 +1,21 @@
 import numpy as np
-import stocco_lib as stclb
 import argparse
 import time
+import stocco_lib as stclb
 
 
 
 
 # default parameters
-N_deflt = 10000   # population size
+N_deflt = 1000   # population size
 m_deflt = 4   # number of genotipic classes
 N_c_deflt = 10   # population threshold for exact evolution (i.e. use of
                  # Gillespie algorithm)
 epsilon_deflt = 0.04   # parameter of the leaping condition
 fitness_deflt = 'flat'   # kind of fitness distribution over genotipic space
+
+datafile_deflt = 'results.txt'   # file to store results
+output_deflt = 'screen'   # kind of results to store
 
 
 
@@ -24,11 +27,13 @@ if __name__ == "__main__":
     # parameters setting
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-N', type=int, default=N_deflt)
-    parser.add_argument('-m', type=int, default=m_deflt)
-    parser.add_argument('-N_c', type=int, default=N_c_deflt)
+    parser.add_argument('--N', type=int, default=N_deflt)
+    parser.add_argument('--m', type=int, default=m_deflt)
+    parser.add_argument('--N_c', type=int, default=N_c_deflt)
     parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
-    parser.add_argument('--fitness', choices=[fitness_deflt, ], default=fitness_deflt)
+    parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'dynamic'], default=fitness_deflt)
+    parser.add_argument('--datafile', default=datafile_deflt)
+    parser.add_argument('--output', choices=['screen', 'simulation_time', 'elapsed_time', 'final_state'], default=output_deflt)
 
     args = parser.parse_args()
 
@@ -42,12 +47,27 @@ if __name__ == "__main__":
     x[0] = N
 
     # fitness distribution in genotipic space
-    if args.fitness == 'flat':
-        s = np.zeros(m)
+    f = np.ones(m)
+    if args.fitness == 'flat':   # flat fitness landscape
+        pass
+    elif args.fitness == 'static_inc':   # static increasing fitness landscape
+        f += 0.01
+        for i in range(m):
+            f[i] = f[i]**i
+    elif args.fitness == 'static_dec':   # static decreasing fitness landscape
+        f += 0.01
+        for i in range(m):
+            f[i] = f[i]**(m-i-1)
+    elif args.fitness == 'dynamic':   # dynamic fitness landscape
+        pass
 
     mu = np.full(m, 1/N)   # mutation rate distribution
 
     t = 0   # time
+    
+    # setting datafile options
+    datafile = args.datafile
+    output = args.output
    
 
 
@@ -60,10 +80,10 @@ if __name__ == "__main__":
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
     while m_temp != m+1:
-        
+       
 
         # computing the events rates
-        a = stclb.compute_rates(x[:m_temp], s[:m_temp], mu[:m_temp])
+        a = stclb.compute_rates(x[:m_temp], f[:m_temp], mu[:m_temp])
 
 
         # partitioning the set of events in non-critical and critical ones
@@ -98,7 +118,8 @@ if __name__ == "__main__":
 
         # computing leap time and time to next critical reaction
 
-        tau = stclb.compute_tau(epsilon)
+        tau = stclb.compute_tau(epsilon) 
+
 
         e = tau + 1
         if a_crit.shape[0] > 0 and np.sum(a_crit) > 0:
@@ -114,7 +135,7 @@ if __name__ == "__main__":
             # computing the index of the event
 
             index = LAMBDA[stclb.Gillespie_extract(a_crit)]
-            
+           
             
             # updating the state (we do it directly without using the state-change
             # vector)
@@ -165,5 +186,19 @@ if __name__ == "__main__":
 
 
     
-    # printing final state and time 
-    print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time} s\n")
+    # printing final results 
+    
+    if output == 'screen':
+        print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time} s\n")
+
+    elif output == 'simulation_time':
+        with open(datafile, 'a') as file:
+            file.write(str(t))
+
+    elif output == 'elapsed_time':
+        with open(datafile, 'a') as file:
+            file.write(str(elapsed_time))
+
+    elif output == 'final_state':
+        with open(datafile, 'a') as file:
+            file.write(str(x))

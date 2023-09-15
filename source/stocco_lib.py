@@ -3,18 +3,19 @@ import numpy as np
 
 
 
-# computes events' rates (for all events, both critical and non-critical);
-# in the array a death/birth events are placed before mutation events
-def compute_rates(x, s, mu):
+# computes events' rates(in the array a death/birth events are placed 
+# before mutation events)
+def compute_rates(x, f, mu):
 
 
     m = x.shape[0]
     a = np.zeros(m**2)
     
+
     # computing rates of birth/death events
-    norm = np.sum((1+s)*x)
+    norm = np.sum(f*x)
     for j in range(m):
-        a[j*(m-1):(j+1)*(m-1)] = (1+np.delete(s, j)) * np.delete(x, j)
+        a[j*(m-1):(j+1)*(m-1)] = (np.delete(f, j)) * np.delete(x, j)
         a[j*(m-1):(j+1)*(m-1)] *= x[j]
     a[:m*(m-1)] /= norm
 
@@ -73,17 +74,17 @@ def Gillespie_extract(a):
            
     
     # extracting the index (naive algorithm)
-    #found = False
-    #index = 0
-    #while not found:
-    #    if u < a_cum[index]:
-    #        found = True
-    #    else:
-    #        index += 1
+    found = False
+    index = 0
+    while not found:
+        if u < a_cum[index]:
+            found = True
+        else:
+            index += 1
 
 
     # extracting the index (recursive algorithm)
-    index = find_index(u, a_cum)
+    #index = find_index(u, a_cum)
 
 
     return good_indexes[index]
@@ -109,9 +110,11 @@ def find_index(u, a_cum):
         if index == 0:
             return index
         
-        if u < a_cum[index-1]:
+        if u <= a_cum[index-1]:
             index = find_index(u, a_cum[:index-1])
         elif a_cum[index] < u:
             index += find_index(u, a_cum[index+1:])
+
+        print(index)
         
         return index

@@ -6,3 +6,5 @@
 
 - Far notare che si è risparmiato lo spazio del vettore (matrice) v e che si è usato un 
 algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
+
+- Spiegare bene tutti tipi di fitness landscape
