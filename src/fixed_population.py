@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import argparse
 import time
 import stocco_lib as stclb
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     parser.add_argument('--m', type=int, default=m_deflt)
     parser.add_argument('--N_c', type=int, default=N_c_deflt)
     parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
-    parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'dynamic'], default=fitness_deflt)
+    parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'static_mount', 'dynamic'], default=fitness_deflt)
     parser.add_argument('--datafile', default=datafile_deflt)
     parser.add_argument('--output', choices=['screen', 'simulation_time', 'elapsed_time', 'final_state'], default=output_deflt)
 
@@ -58,8 +59,17 @@ if __name__ == "__main__":
         f += 0.01
         for i in range(m):
             f[i] = f[i]**(m-i-1)
+    elif args.fitness == 'static_mount':   # static 'mountain' fitness landscape
+        f += 0.01
+        for i in range(m):
+            f[i] = f[i]**(m-math.fabs(m-2*i))
     elif args.fitness == 'dynamic':   # dynamic fitness landscape
-        pass
+        f += 0.01
+        for i in range(m):
+            f[i] = f[i]**(m-math.fabs(m-2*i))
+        #############################
+        # aggiungere interazione
+        #############################
 
     mu = np.full(m, 1/N)   # mutation rate distribution
 

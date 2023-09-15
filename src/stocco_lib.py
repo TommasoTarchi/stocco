@@ -74,17 +74,17 @@ def Gillespie_extract(a):
            
     
     # extracting the index (naive algorithm)
-    found = False
-    index = 0
-    while not found:
-        if u < a_cum[index]:
-            found = True
-        else:
-            index += 1
+    #found = False
+    #index = 0
+    #while not found:
+    #    if u < a_cum[index]:
+    #        found = True
+    #    else:
+    #        index += 1
 
 
     # extracting the index (recursive algorithm)
-    #index = find_index(u, a_cum)
+    index = find_index(u, a_cum)
 
 
     return good_indexes[index]
@@ -111,10 +111,8 @@ def find_index(u, a_cum):
             return index
         
         if u <= a_cum[index-1]:
-            index = find_index(u, a_cum[:index-1])
+            index = find_index(u, a_cum[:index])
         elif a_cum[index] < u:
-            index += find_index(u, a_cum[index+1:])
-
-        print(index)
-        
+            index += 1 + find_index(u, a_cum[index+1:])
+       
         return index
