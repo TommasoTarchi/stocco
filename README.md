@@ -12,7 +12,9 @@ at Uiversity of Trieste/SISSA. The aim is that of reproducing the simulations re
 - `src/`: directory containing all python codes used to run the simulations; contains:
   - `stocco_lib.py`: library containing all functions used for the simulations
   - `fixed_population.py`: script used for fixed-population simulations
-  - 
-- `fixed_pop-flat_fit`: directory containing simulations with flat fitness landscape; contains:
-- `fixed_pop-stat_fit`: directory containing simulations with static fitness landscape; contains:
-- `fixed_pop-dyn_fit`: directory containing simulations with dynamic fitness landscape; contains:
+- `fixed_pop-flat_fit/`: directory containing simulations with fixed population and flat fitness landscape; contains:
+- `fixed_pop-stat_fit/`: directory containing simulations with fixed population and static fitness landscape; contains:
+  - `algo_comparison.sh`: script to run simulation with both exact and hybrid algorithms to compare performance
+  - `algo_comparison.csv`: data for comparison between exact and hybrid algorithms
+- `fixed_pop-dyn_fit/`: directory containing simulations with fixed population and dynamic fitness landscape; contains:
+- `var_pop-dyn_fit/`: directory containing simulations with variable population and dynamic fitness landscape; contains:
