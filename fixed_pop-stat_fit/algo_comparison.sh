@@ -3,7 +3,7 @@
 #SBATCH --job-name="algo_comparison"
 #SBATCH --partition=THIN
 #SBATCH -N 1
-#SBATCH -n 5
+#SBATCH -n 10
 #SBATCH --time=02:00:00
 
 
@@ -11,6 +11,8 @@ module load architecture/Intel
 module load conda/23.3.1
 
 conda activate stoch_modelling
+
+export OMP_NUM_THREADS=10
 
 
 datafile=$(pwd)/algo_comparison.csv
