@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --no-requeue
 #SBATCH --job-name="algo_comparison"
-#SBATCH --partition=EPYC
+#SBATCH --partition=THIN
 #SBATCH -N 1
 #SBATCH -n 5
 #SBATCH --time=02:00:00
 
 
-# module load architecture/AMD
+module load architecture/Intel
 
 
 datafile=$(pwd)/algo_comparison.csv
@@ -30,4 +30,4 @@ do
 done 
 
 
-# module purge
+module purge

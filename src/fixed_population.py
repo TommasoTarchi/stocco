@@ -66,10 +66,11 @@ if __name__ == "__main__":
     elif args.fitness == 'dynamic':   # dynamic fitness landscape
         f += 0.01
         for i in range(m):
-            f[i] = f[i]**(m-math.fabs(m-2*i))
-        #############################
-        # aggiungere interazione
-        #############################
+            f[i] = f[i]**(m-math.fabs(m-2*i))   # the static component is of the 
+                                                # 'mountain' kind; the dynamic 
+                                                # part is computed at the beginning
+                                                # of each iteration of the main
+                                                # loop
 
     mu = np.full(m, 1/N)   # mutation rate distribution
 
@@ -90,10 +91,22 @@ if __name__ == "__main__":
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
     while m_temp != m+1:
-       
 
-        # computing the events rates
-        a = stclb.compute_rates(x[:m_temp], f[:m_temp], mu[:m_temp])
+
+        f_part = f[:m_temp]   # fitness values that will be actually used
+                              # at this iteration
+
+        # computing the dynamic component of the fitness
+        if args.fitness == 'dynamic':
+            x_rate = x[:m_temp]/N
+            f_part += np.ones(m_temp)
+            for i in range(m_temp):
+                for j in range(m_temp):
+                    f_part[i] -= x_rate[j] * (m-math.fabs(i-j))/m
+
+
+        # computing the events' rates
+        a = stclb.compute_rates(x[:m_temp], f_part, mu[:m_temp])
 
 
         # partitioning the set of events in non-critical and critical ones
@@ -199,7 +212,7 @@ if __name__ == "__main__":
     # printing final results 
     
     if output == 'screen':
-        print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time} s\n")
+        print(f"final state:  {x}\nsimulation time:  {t}\nelapsed time:  {elapsed_time} s\n")
 
     elif output == 'time':
         with open(datafile, 'a') as file:

@@ -17,6 +17,4 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
 - Pensare se aggiungere un tempo massimo alla simulazione (in particolare per fitness landscape
 che non 'spingono' verso destra
 
-- Fondere .sh e \_clust.sh
-
 - Riadattare analisi.py per i csv con quattro colonne
