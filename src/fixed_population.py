@@ -34,7 +34,7 @@ if __name__ == "__main__":
     parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
     parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'static_mount', 'dynamic'], default=fitness_deflt)
     parser.add_argument('--datafile', default=datafile_deflt)
-    parser.add_argument('--output', choices=['screen', 'simulation_time', 'elapsed_time', 'final_state'], default=output_deflt)
+    parser.add_argument('--output', choices=['screen', 'time', 'final_state'], default=output_deflt)
 
     args = parser.parse_args()
 
@@ -201,13 +201,9 @@ if __name__ == "__main__":
     if output == 'screen':
         print(f"final state:  {x}\nfinal time:  {t}\nelapsed simulation time:  {elapsed_time} s\n")
 
-    elif output == 'simulation_time':
+    elif output == 'time':
         with open(datafile, 'a') as file:
-            file.write(str(t))
-
-    elif output == 'elapsed_time':
-        with open(datafile, 'a') as file:
-            file.write(str(elapsed_time))
+            file.write(f"{t},{elapsed_time}")
 
     elif output == 'final_state':
         with open(datafile, 'a') as file:
