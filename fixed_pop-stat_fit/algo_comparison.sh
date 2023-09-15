@@ -7,10 +7,10 @@
 #SBATCH --time=02:00:00
 
 
-#module load architecture/Intel
-#module load conda/23.3.1
+module load architecture/Intel
+module load conda/23.3.1
 
-#conda activate stoch_modelling
+conda activate stoch_modelling
 
 
 datafile=$(pwd)/algo_comparison.csv
@@ -33,4 +33,4 @@ do
 done 
 
 
-#module purge
+module purge

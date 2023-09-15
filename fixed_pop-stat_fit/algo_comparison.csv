@@ -1,8 +1,0 @@
-# data for simulation time and efficiency comparision between
-# exact and hybrid algorithms
-#
-# fitness landscape: static increasing
-# number of genotipic classes = 20
-# population size = 1000
-# 
-exact_simulation,exact_elapsed,hybrid_simulation,hybrid_elapsed
