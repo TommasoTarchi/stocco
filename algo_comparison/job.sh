@@ -15,7 +15,7 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/algo_comparison.csv
+datafile=$(pwd)/data.csv
 
 echo "# data for simulation time and efficiency comparision between" > "$datafile"
 echo "# exact and hybrid algorithms" >> "$datafile"

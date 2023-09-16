@@ -3,7 +3,7 @@ import pandas as pd
 
 
 # Read the CSV file into a Pandas DataFrame
-df = pd.read_csv('algo_comparison.csv', comment='#')
+df = pd.read_csv('data.csv', comment='#')
 
 
 # Calculate means and standard deviations
