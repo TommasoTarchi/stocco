@@ -1,5 +1,3 @@
-- Add competition contribute to fitness
-
 - Use random.Generator to generate random variables (as suggested in numpy documentation)
 
 - Far notare che si è risparmiato lo spazio del vettore (matrice) v e che si è usato un 
@@ -8,13 +6,13 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
 - Spiegare bene tutti tipi di fitness landscape
 
 - Idea generale:
-  - usa dati 'di prova' (in cui si usano sia exact che hybrid algorithm) per controllare 
-  che siano in accordo con paper
-  - esplora con diversi fitness landscape e anche con variable population usando solo
-  hybrid algorithm
-  - (eventualmente) fai studio dell'efficienza usando rirunnando 'prova'
+  - comparazione di risultati ed efficienza di algoritmi esatto e ibrido usando fixed population 
+  e static fitness
+  - comparazione di risultati (sia tempo che stato finale) usando algo ibrido con fixed population 
+  e tutti tipi di fitness
+  - da definire con dynamic population
 
 - Pensare se aggiungere un tempo massimo alla simulazione (in particolare per fitness landscape
 che non 'spingono' verso destra
 
-- Riadattare analisi.py per i csv con quattro colonne
+- Rinominare i job come job.sh

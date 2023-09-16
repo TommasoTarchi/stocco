@@ -135,8 +135,8 @@ if __name__ == "__main__":
         LAMBDA.sort()
 
 
-        a_ncrit = a[OMEGA]
-        a_crit = a[LAMBDA]
+        a_ncrit = a[OMEGA]   # non-critical events' rates
+        a_crit = a[LAMBDA]   # critical events' rates
 
 
         # computing leap time and time to next critical reaction
