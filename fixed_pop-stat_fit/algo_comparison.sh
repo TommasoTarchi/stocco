@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --no-requeue
 #SBATCH --job-name="algo_comparison"
-#SBATCH --partition=THIN
+#SBATCH --partition=EPYC
 #SBATCH -N 1
 #SBATCH -n 10
 #SBATCH --time=02:00:00
