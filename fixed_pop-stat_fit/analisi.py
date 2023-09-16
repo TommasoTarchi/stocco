@@ -1,21 +1,42 @@
 import pandas as pd
 
+
+
 # Read the CSV file into a Pandas DataFrame
 df = pd.read_csv('flat.csv', comment='#')
 
-# Calculate the mean and standard deviation of Column1
-mean_column1 = df['exact_simulation'].mean()
-stddev_column1 = df['exact_simulation'].std()
 
-# Calculate the mean and standard deviation of Column2
-mean_column2 = df['hybrid_simulation'].mean()
-stddev_column2 = df['hybrid_simulation'].std()
+# Calculate means and standard deviations
+
+mean_es = df['exact_simulation'].mean()
+stddev_es = df['exact_simulation'].std()
+
+mean_hs = df['hybrid_simulation'].mean()
+stddev_hs = df['hybrid_simulation'].std()
+
+mean_ee = df['exact_elapsed'].mean()
+stddev_ee = df['exact_elapsed'].std()
+
+mean_he = df['hybrid_elapsed'].mean()
+stddev_he = df['hybrid_elapsed'].std()
+
 
 # Print the results
-print("Column1:")
-print(f"Mean: {mean_column1}")
-print(f"Standard Deviation: {stddev_column1}\n")
 
-print("Column2:")
-print(f"Mean: {mean_column2}")
-print(f"Standard Deviation: {stddev_column2}")
+print("exact_simulation:")
+print(f"Mean: {mean_es}")
+print(f"Standard Deviation: {stddev_es}\n")
+
+print("hybrid_simulation:")
+print(f"Mean: {mean_hs}")
+print(f"Standard Deviation: {stddev_hs}")
+
+print()
+
+print("exact_elapsed:")
+print(f"Mean: {mean_ee}")
+print(f"Standard Deviation: {stddev_ee}\n")
+
+print("hybrid_elapsed:")
+print(f"Mean: {mean_he}")
+print(f"Standard Deviation: {stddev_he}")
