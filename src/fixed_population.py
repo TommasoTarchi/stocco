@@ -220,4 +220,4 @@ if __name__ == "__main__":
 
     elif output == 'final_state':
         with open(datafile, 'a') as file:
-            file.write(str(x))
+            file.write(f"{t},{elapsed_time},{x}")
