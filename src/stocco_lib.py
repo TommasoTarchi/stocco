@@ -3,8 +3,8 @@ import numpy as np
 
 
 
-# computes events' rates(in the array a death/birth events are placed 
-# before mutation events)
+# computes events' rates for fixed population size (in the array a 
+# death/birth events are placed before mutation events)
 def compute_rates(x, f, mu):
 
 
@@ -25,6 +25,14 @@ def compute_rates(x, f, mu):
 
 
     return a
+
+
+
+
+# computes events' rates for dynamic population size (in the array a death 
+# events come first, then birth and finally mutation ones)
+def compute_rates_dyn_pop(x, N_tilde, f, mu):
+    pass
 
 
 
