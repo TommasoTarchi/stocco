@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-### script to be launched after job.sh to complete the data gathering on
-### Orfeo (it was needed because of the time constraint we had on the cluster)
-
-
 #SBATCH --no-requeue
 #SBATCH --job-name="algo_comparison"
 #SBATCH --partition=EPYC
@@ -13,7 +9,7 @@
 #SBATCH --time=02:00:00
 
 
-module load architecture/AMD
+module load architecture/Intel
 module load conda/23.3.1
 
 conda activate stoch_modelling
@@ -23,7 +19,15 @@ export OMP_NUM_THREADS=10
 
 datafile=$(pwd)/data.csv
 
-echo >> "$datafile"
+echo "# data for simulation time and efficiency comparision between" > "$datafile"
+echo "# exact and hybrid algorithms" >> "$datafile"
+echo "#" >> "$datafile"
+echo "# fitness landscape: static increasing" >> "$datafile"
+echo "# number of genotipic classes: 20" >> "$datafile"
+echo "# population size: 1000" >> "$datafile"
+echo "# " >> "$datafile"
+
+echo "exact_simulation,exact_elapsed,hybrid_simulation,hybrid_elapsed" >> "$datafile"
 for index in {1..10}
 do
     python3 ../src/fixed_population.py --N_c 1000 --m 20 --fitness "static_inc" --output "time" --datafile "$datafile"

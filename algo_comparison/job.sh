@@ -13,7 +13,7 @@
 #SBATCH --time=02:00:00
 
 
-module load architecture/Intel
+module load architecture/AMD
 module load conda/23.3.1
 
 conda activate stoch_modelling

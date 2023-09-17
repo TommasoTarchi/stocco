@@ -94,6 +94,14 @@ if __name__ == "__main__":
 
 
 
+    ############################################
+    datafile = 'debug.txt'
+    with open(datafile, 'w') as file:
+        file.write('')
+    ############################################
+
+
+
     # main loop (evolution)
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
@@ -102,6 +110,11 @@ if __name__ == "__main__":
 
         # updating population parameters
         N = np.sum(x[:m_temp])
+        ###################################################
+        if t % 10 < 0.001: 
+            with open(datafile, 'a') as file:
+                file.write(f"t:  {t}, x:  {x}\n")
+        ###################################################
         if N_tilde_mod == 'growing':
             ex = math.exp(0.001 * t)
             N_tilde = 10e7 * N_0 * ex / (10e7 + N_0*ex - 1)
@@ -133,9 +146,9 @@ if __name__ == "__main__":
         LAMBDA = []   # critical set
         for i in range(3):
             for j in sigma:
-                OMEGA.append(i*m + j)
+                OMEGA.append(i*m_temp + j)
             for j in SIGMA:
-                LAMBDA.append(i*m + j)
+                LAMBDA.append(i*m_temp + j)
 
 
         a_ncrit = a[OMEGA]   # non-critical events' rates

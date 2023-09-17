@@ -47,7 +47,7 @@ def compute_rates_dyn_pop(x, N_tilde, f, mu):
     # death rates already computed
 
     # computing mutation rates
-    a[2*m:3*m-1] *= mu
+    a[2*m:3*m] *= mu
 
 
     return a
