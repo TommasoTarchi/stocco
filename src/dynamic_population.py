@@ -165,42 +165,39 @@ if __name__ == "__main__":
             
             # updating the state (we do it directly without using the state-change
             # vector)
-
-            event_offset = index // m_temp
-            event_rmd = index % m_temp
-            if event_offset == 0:
-                x[event_rmd] += 1
-            elif m_temp == 1:
-                x[event_rmd] -= 1
+            event_type = index // m_temp
+            event_index = index % m_temp
+            if event_type == 0:
+                x[event_index] += 1
+            elif event_type == 1:
+                x[event_index] -= 1
             else:
-                x[event_rmd] -= 1
-                x[event_rmd+1] += 1
+                x[event_index] -= 1
+                x[event_index+1] += 1
+
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)
 
         
-#######################################################################################
         # using the tau-leap algorithm
         i = 0
         for index in OMEGA:
             
             # updating the state (we do it directly without using the state-change
             # vector)
-            if index < m_temp*(m_temp-1):
-                j = index // (m_temp-1)
-                j_prime = index % (m_temp-1)
-                if j <= j_prime:
-                    j_prime += 1
-                x[j] -= r[i]
-                x[j_prime] += r[i]
+            event_type = index // m_temp
+            event_index = index % m_temp
+            if event_type == 0:
+                x[event_index] += r[i]
+            elif event_type == 1:
+                x[event_index] -= r[i]
             else:
-                x[index-m_temp*(m_temp-1)] -= r[i]
-                x[index-m_temp*(m_temp-1)+1] += r[i]
+                x[event_index] -= r[i]
+                x[event_index+1] += r[i]
 
             i += 1
-########################################################################################
-        
+
 
         # updating time and 'highest' genotipic class reached so far
         t += h
