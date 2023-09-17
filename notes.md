@@ -15,4 +15,5 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
 - Pensare se aggiungere un tempo massimo alla simulazione (in particolare per fitness landscape
 che non 'spingono' verso destra
 
-- Rinominare i job come job.sh
+- Controllare che effettivamente la population size si comporti come descritto nel paper nei
+modelli con popolazione variabile

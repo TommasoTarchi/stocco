@@ -1,4 +1,10 @@
 #!/bin/bash
+
+
+### script to run several simulations with both exact and hybrid algorithms on Orfeo, cluster 
+### hosted at Area Science Park (Trieste, Italy)
+
+
 #SBATCH --no-requeue
 #SBATCH --job-name="algo_comparison"
 #SBATCH --partition=EPYC

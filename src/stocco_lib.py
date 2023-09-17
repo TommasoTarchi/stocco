@@ -12,7 +12,7 @@ def compute_rates(x, f, mu):
     a = np.zeros(m**2)
     
 
-    # computing rates of birth/death events
+    # computing birth/death rates
     norm = np.sum(f*x)
     for j in range(m):
         a[j*(m-1):(j+1)*(m-1)] = (np.delete(f, j)) * np.delete(x, j)
@@ -20,7 +20,7 @@ def compute_rates(x, f, mu):
     a[:m*(m-1)] /= norm
 
 
-    # computing rates of mutation events
+    # computing mutation rates
     a[m*(m-1):m*m] = mu*x
 
 
@@ -29,10 +29,28 @@ def compute_rates(x, f, mu):
 
 
 
-# computes events' rates for dynamic population size (in the array a death 
-# events come first, then birth and finally mutation ones)
+# computes events' rates for dynamic population size (in the array a birth 
+# events come first, then death and finally mutation ones)
 def compute_rates_dyn_pop(x, N_tilde, f, mu):
-    pass
+
+
+    m = x.shape[0]
+    a = np.zeros(m*3)
+    for i in range(3):
+        a[i*m:(i+1)*m] = x
+
+
+    # computing birth rates
+    norm = np.sum(f*x)
+    a[:m] *= N_tilde * f / norm
+
+    # death rates already computed
+
+    # computing mutation rates
+    a[2*m:3*m-1] *= mu
+
+
+    return a
 
 
 

@@ -9,8 +9,8 @@ import stocco_lib as stclb
 
 
 # default parameters
-N_tilde_deflt = 1000   # starting value of the N_tilde parameter (and of the 
-                       # true population size)
+N_0_deflt = 1000   # starting value of the N_tilde parameter (and of the 
+                   # true population size)
 m_deflt = 4   # number of genotipic classes
 N_c_deflt = 10   # population threshold for exact evolution (i.e. use of
                  # Gillespie algorithm)
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # parameters setting
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--N_tilde', type=int, default=N_tilde_deflt)
+    parser.add_argument('--N_0', type=int, default=N_0_deflt)
     parser.add_argument('--m', type=int, default=m_deflt)
     parser.add_argument('--N_c', type=int, default=N_c_deflt)
     parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
@@ -41,8 +41,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    N_tilde = args.N_tilde   # initial population
-    N = N_tilde
+    N_tilde_mod = args.N_tilde_mod
+    N_0 = args.N_0   # initial population
+    N_tilde = N_0
+    N = N_0
     m = args.m
     N_c = args.N_c
     epsilon = args.epsilon
@@ -98,7 +100,11 @@ if __name__ == "__main__":
     while m_temp != m+1:
 
 
-        ### AGGIUNGERE AGGIORNAMENTO DELLA POPULATION SIZE N
+        # updating population parameters
+        N = np.sum(x[:m_temp])
+        if N_tilde_mod == 'growing':
+            ex = math.exp(0.001 * t)
+            N_tilde = 10e7 * N_0 * ex / (10e7 + N_0*ex - 1)
 
 
         f_part = f[:m_temp]   # fitness values that will be actually used
@@ -110,40 +116,26 @@ if __name__ == "__main__":
             f_part += np.ones(m_temp)
             for i in range(m_temp):
                 for j in range(m_temp):
-                    f_part[i] -= x_rate[j] * (m-math.fabs(i-j))/m
+                    f_part[i] -= x_rate[j] * (m-math.fabs(i-j)) / m
 
 
         # computing the events' rates
-        a = stclb.compute_rates_dyn_pop(x[:m_temp], N_tilde, f_part, mu[:m_temp])   ### DA SCRIVERE IN STOCCO_LIB.PY
+        a = stclb.compute_rates_dyn_pop(x[:m_temp], N_tilde, f_part, mu[:m_temp]) 
 
 
         # partitioning the set of events in non-critical and critical ones
 
         sigma = np.where(x[:m_temp] <= N_c)[0]   # small population classes
+        SIGMA = np.where(x[:m_temp] > N_c)[0]   # large population classes
 
 
-#########################################################################
-        OMEGA = list(range(m_temp**2))   # non-critical set
+        OMEGA = []   # non-critical set
         LAMBDA = []   # critical set
-        for i in sigma:
-            for j in range(i):
-                pos = j*(m_temp-1)+i-1
-                if pos in OMEGA:
-                    OMEGA.remove(pos)
-                    LAMBDA.append(pos)
-            for j in range(i*(m_temp-1), (i+1)*(m_temp-1)):
-                if j in OMEGA:
-                    OMEGA.remove(j)
-                    LAMBDA.append(j)
-            for j in range(i+1, m_temp):
-                pos = j*(m_temp-1)+i
-                if pos in OMEGA:
-                    OMEGA.remove(pos)
-                    LAMBDA.append(pos)
-            OMEGA.remove(m_temp*(m_temp-1)+i)
-            LAMBDA.append(m_temp*(m_temp-1)+i)
-        LAMBDA.sort()
-#########################################################################
+        for i in range(3):
+            for j in sigma:
+                OMEGA.append(i*m + j)
+            for j in SIGMA:
+                LAMBDA.append(i*m + j)
 
 
         a_ncrit = a[OMEGA]   # non-critical events' rates
@@ -171,20 +163,18 @@ if __name__ == "__main__":
             index = LAMBDA[stclb.Gillespie_extract(a_crit)]
            
             
-#######################################################################################
             # updating the state (we do it directly without using the state-change
             # vector)
-            if index < m_temp*(m_temp-1):
-                j = index // (m_temp-1)
-                j_prime = index % (m_temp-1)
-                if j <= j_prime:
-                    j_prime += 1
-                x[j] -= 1
-                x[j_prime] += 1
+
+            event_offset = index // m_temp
+            event_rmd = index % m_temp
+            if event_offset == 0:
+                x[event_rmd] += 1
+            elif m_temp == 1:
+                x[event_rmd] -= 1
             else:
-                x[index-m_temp*(m_temp-1)] -= 1
-                x[index-m_temp*(m_temp-1)+1] += 1
-#######################################################################################
+                x[event_rmd] -= 1
+                x[event_rmd+1] += 1
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)

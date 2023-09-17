@@ -3,7 +3,7 @@ import pandas as pd
 
 
 # Read the CSV file into a Pandas DataFrame
-df = pd.read_csv('data.csv', comment='#')
+df = pd.read_csv('data.csv', comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 
 
 # Calculate means and standard deviations

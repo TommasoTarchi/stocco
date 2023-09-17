@@ -1,4 +1,10 @@
 #!/bin/bash
+
+
+### script to be launched after job.sh to complete the data gathering on
+### Orfeo (it was needed because of the time constraint we had on the cluster)
+
+
 #SBATCH --no-requeue
 #SBATCH --job-name="algo_comparison"
 #SBATCH --partition=EPYC
