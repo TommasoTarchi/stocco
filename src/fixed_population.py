@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
 
         # the algorithm did not converge within an acceptable time
-        if t > 25000:
+        if t > 50000 + m*2000:
             t = 'not_converge'
             break
 
