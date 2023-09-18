@@ -4,7 +4,7 @@
 ### script to run several simulations with hybrid algorithms and different fitness
 ### landscapes on Orfeo, cluster hosted at Area Science Park (Trieste, Italy)
 ###
-### number of genotipic classes = 20
+### number of genotipic classes = 10
 
 
 #SBATCH --no-requeue
@@ -23,27 +23,27 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/data_m20.csv
+datafile=$(pwd)/data_m10.csv
 
 echo "# data for comparison between different fitness landscapes with" > "$datafile"
 echo "# hybrid algorithm" >> "$datafile"
 echo "#" >> "$datafile"
-echo "# number of genotipic classes: 20" >> "$datafile"
+echo "# number of genotipic classes: 10" >> "$datafile"
 echo "# population size: 10000" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "flat_simul,flat_elpsd,flat_state,static_inc_simul,static_inc_elpsd,static_inc_state,static_dec_simul,static_dec_elpsd,static_dec_state,static_mount_simul,static_mount_elpsd,static_mount_state,dynamic_simul,dynamic_elpsd,dynamic_state" >> "$datafile"
 for index in {1..20}
 do
-    python3 ../src/fixed_population.py --m 20 --N 10000 --fitness "flat" --output "final_state" --datafile "$datafile"
+    python3 ../src/fixed_population.py --m 10 --N 10000 --fitness "flat" --output "final_state" --datafile "$datafile"
     echo -n "," >> "$datafile"
-    python3 ../src/fixed_population.py --m 20 --N 10000 --fitness "static_inc" --output "final_state" --datafile "$datafile"
+    python3 ../src/fixed_population.py --m 10 --N 10000 --fitness "static_inc" --output "final_state" --datafile "$datafile"
     echo -n "," >> "$datafile"
-    python3 ../src/fixed_population.py --m 20 --N 10000 --fitness "static_dec" --output "final_state" --datafile "$datafile"
+    python3 ../src/fixed_population.py --m 10 --N 10000 --fitness "static_dec" --output "final_state" --datafile "$datafile"
     echo -n "," >> "$datafile"
-    python3 ../src/fixed_population.py --m 20 --N 10000 --fitness "static_mount" --output "final_state" --datafile "$datafile"
+    python3 ../src/fixed_population.py --m 10 --N 10000 --fitness "static_mount" --output "final_state" --datafile "$datafile"
     echo -n "," >> "$datafile"
-    python3 ../src/fixed_population.py --m 20 --N 10000 --fitness "dynamic" --output "final_state" --datafile "$datafile"
+    python3 ../src/fixed_population.py --m 10 --N 10000 --fitness "dynamic" --output "final_state" --datafile "$datafile"
     echo >> "$datafile"
 done 
 
