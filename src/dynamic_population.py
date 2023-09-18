@@ -218,6 +218,12 @@ if __name__ == "__main__":
             m_temp += 1
 
 
+        # the algorithm did not converge within an acceptable time
+        if t > 25000:
+            t = 'not_converge'
+            break
+
+
 
     # for efficieny measure
     elapsed_time = time.time() - start_time

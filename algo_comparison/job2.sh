@@ -9,7 +9,7 @@
 #SBATCH --job-name="algo_comparison"
 #SBATCH --partition=EPYC
 #SBATCH -N 1
-#SBATCH -n 1
+#SBATCH -n 10
 #SBATCH --time=02:00:00
 
 
@@ -18,7 +18,7 @@ module load conda/23.3.1
 
 conda activate stoch_modelling
 
-export OMP_NUM_THREADS=1
+export OMP_NUM_THREADS=10
 
 
 datafile=$(pwd)/data.csv

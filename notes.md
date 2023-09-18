@@ -7,13 +7,11 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
 
 - Idea generale:
   - comparazione di risultati ed efficienza di algoritmi esatto e ibrido usando fixed population 
-  e static fitness
+  e static fitness, magari sia con popolazione 1000 che 10000
   - comparazione di risultati (sia tempo che stato finale) usando algo ibrido con fixed population 
-  e tutti tipi di fitness
+  e tutti tipi di fitness; per lo stato finale mostrare per quali valori e in che percentuale si 
+  ha speciazione
   - da definire con dynamic population
-
-- Pensare se aggiungere un tempo massimo alla simulazione (in particolare per fitness landscape
-che non 'spingono' verso destra
 
 - Controllare che effettivamente la population size si comporti come descritto nel paper nei
 modelli con popolazione variabile
