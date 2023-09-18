@@ -1,4 +1,3 @@
-from dateutil.parser import parse
 import numpy as np
 import math
 import argparse
@@ -37,7 +36,7 @@ if __name__ == "__main__":
     parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'static_mount', 'dynamic'], default=fitness_deflt)
     parser.add_argument('--N_tilde_mod', choices=['constant', 'growing'], default=N_tilde_mod_deflt)
     parser.add_argument('--datafile', default=datafile_deflt)
-    parser.add_argument('--output', choices=['screen', 'time', 'final_state'], default=output_deflt)
+    parser.add_argument('--output', choices=['screen', 'time', 'population'], default=output_deflt)
 
     args = parser.parse_args()
 
@@ -94,14 +93,6 @@ if __name__ == "__main__":
 
 
 
-    ############################################
-    datafile = 'debug.txt'
-    with open(datafile, 'w') as file:
-        file.write('')
-    ############################################
-
-
-
     # main loop (evolution)
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
@@ -109,12 +100,6 @@ if __name__ == "__main__":
 
 
         # updating population parameters
-        N = np.sum(x[:m_temp])
-        ###################################################
-        if t % 10 < 0.001: 
-            with open(datafile, 'a') as file:
-                file.write(f"t:  {t}, x:  {x}\n")
-        ###################################################
         if N_tilde_mod == 'growing':
             ex = math.exp(0.001 * t)
             N_tilde = 10e7 * N_0 * ex / (10e7 + N_0*ex - 1)
@@ -218,8 +203,18 @@ if __name__ == "__main__":
             m_temp += 1
 
 
+        # updating population size
+        N = np.sum(x[:m_temp])
+
+
+        # printing population data
+        if output == 'population':
+            with open(datafile, 'w') as file:
+                file.write(f"{N_tilde},{N}\n")
+
+
         # the algorithm did not converge within an acceptable time
-        if t > 25000:
+        if t > 20000 + m * 2000:
             t = 'not_converge'
             break
 
@@ -238,11 +233,3 @@ if __name__ == "__main__":
     elif output == 'time':
         with open(datafile, 'a') as file:
             file.write(f"{t},{elapsed_time}")
-
-    elif output == 'final_state':
-        with open(datafile, 'a') as file:
-            file.write(str(x))
-
-
-
-    ############## VALUTARE SE STAMPARE ANCHE N

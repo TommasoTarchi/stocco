@@ -1,9 +1,19 @@
 import pandas as pd
+import argparse
 
 
 
 # Read the CSV file into a Pandas DataFrame
-df = pd.read_csv('data.csv', comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--m', type=int, choices=[4, 20])
+datafile = ''
+if args.m == 4:
+    datafile = 'data_m4.csv'
+elif args.m == 20:
+    datafile = 'data_m20.csv'
+
+df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 
 
 # Calculate means and standard deviations
@@ -14,8 +24,9 @@ stddev_flat = df['flat_simul'].std()
 mean_static_inc = df['static_inc_simul'].mean()
 stddev_static_inc = df['static_inc_simul'].std()
 
-mean_static_dec = df['static_dec_simul'].mean()
-stddev_static_dec = df['static_dec_simul'].std()
+# commented because of the non convenrgence of the algorithm
+# mean_static_dec = df['static_dec_simul'].mean()
+# stddev_static_dec = df['static_dec_simul'].std()
 
 mean_static_mount = df['static_mount_simul'].mean()
 stddev_static_mount = df['static_mount_simul'].std()
@@ -38,9 +49,9 @@ print(f"Standard Deviation: {stddev_static_inc}\n")
 
 print()
 
-print("static decreasing fitness:")
-print(f"Mean: {mean_static_dec}")
-print(f"Standard Deviation: {stddev_static_dec}\n")
+#print("static decreasing fitness:")
+#print(f"Mean: {mean_static_dec}")
+#print(f"Standard Deviation: {stddev_static_dec}\n")
 
 print()
 
