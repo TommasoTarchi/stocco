@@ -88,6 +88,13 @@ if __name__ == "__main__":
    
 
 
+    # printing population data
+    if output == 'population':
+        with open(datafile, 'a') as file:
+            file.write(f"{N_tilde},{N}\n")
+
+
+
     # for efficiency measure
     start_time = time.time()
 
@@ -209,7 +216,7 @@ if __name__ == "__main__":
 
         # printing population data
         if output == 'population':
-            with open(datafile, 'w') as file:
+            with open(datafile, 'a') as file:
                 file.write(f"{N_tilde},{N}\n")
 
 
