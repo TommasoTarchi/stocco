@@ -37,7 +37,7 @@ echo "# " >> "$datafile"
 echo "" >> "$datafile"
 for index in {1..20}
 do
-    python3 ../src/dynamic_population.py --m 4 --N_0 10000 --fitness "increasing_inc" --output "population" --datafile "$datafile"
+    python3 ../src/dynamic_population.py --m 4 --N_0 10000 --fitness "static_inc" --output "population" --datafile "$datafile"
 done 
 
 
