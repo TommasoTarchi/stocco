@@ -31,7 +31,7 @@ echo "# population size: variable with N_tilde=1000" >> "$datafile"
 echo "# resolution: 4" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "simulation_time,elapsed_time,state_area0,state_area1,state_area2,state_area3" >> "$datafile"
+echo "simulation_time,elapsed_time,state_area0,state_area1,state_area2,state_area3,state_world" >> "$datafile"
 for index in {1..10}
 do
     python3 ../src/spatial.py --m 3 --fitness "static_inc" --output "final_state" --datafile "$datafile"
