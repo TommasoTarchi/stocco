@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 
 
@@ -142,3 +143,188 @@ def find_index(u, a_cum):
             index += 1 + find_index(u, a_cum[index+1:])
        
         return index
+
+
+
+
+# class for evolution with spatial structure
+class world:
+
+
+    def __init__(self, N_0, m, N_c, fitness, resolution):
+        
+        self.N_tot = N_0 - N_0 % resolution   # initial population
+        self.m = m   # number of genotipic classes
+        self.N_c = N_c   # threshold for small populations
+        self.fitness = fitness
+        self.resolution = resolution   # number of areas in which
+                                       # we divide the world
+        self.dim = math.sqrt(self.resolution)
+        
+        # total population distribution in genotipic space
+        self.x_tot = np.zeros(self.m+1)
+        self.x_tot[0] = self.N_tot
+
+        # single areas' distributions in genotipic space
+        self.N = np.repeat(self.resolution, self.N_tot / self.resolution)
+        self.x = []
+        for i in range(self.resolution):
+            self.x.append(self.x_tot / self.resolution)
+        self.m_temp = np.repeat(1, self.resolution)
+
+        # fitness distribution in genotipic space
+        self.f = np.ones(self.m)
+        if fitness == 'flat':   # flat fitness landscape
+            pass
+        elif fitness == 'static_inc':   # static increasing fitness landscape
+            self.f += 0.01
+            for i in range(self.m):
+                self.f[i] = self.f[i]**i
+        elif fitness == 'static_dec':   # static decreasing fitness landscape
+            self.f += 0.01
+            for i in range(self.m):
+                self.f[i] = self.f[i]**(self.m-i-1)
+        elif fitness == 'static_mount':   # static 'mountain' fitness landscape
+            self.f += 0.01
+            for i in range(self.m):
+                self.f[i] = self.f[i]**(self.m-math.fabs(self.m-2*i))
+
+        self.mu = np.full(self.m, 1/self.N_tot)   # mutation rate distribution
+
+
+    def compute_fitness(self):
+
+        self.f_part = []
+
+        for i in range(self.resolution):
+
+            self.f_part.append(self.f[:self.m_temp[i]])   # fitness values that will be actually used
+                                                            # at this iteration
+    
+    # computes events' rates
+    def compute_rates(self, N_tilde):
+                
+        self.a = []
+        
+        for i in range(self.resolution):
+            self.a.append(compute_rates_dyn_pop(self.x[i][:self.m_temp[i]], N_tilde, self.f_part[i], self.mu[:self.m_temp[i]])) 
+
+
+    # partitioning the set of events in non-critical and critical ones
+    def compute_partition(self):
+
+        self.sigma = []
+        self.SIGMA = []
+        self.OMEGA = []
+        self.LAMBDA = []
+
+        self.a_crit = []
+        self.a_ncrit = []
+
+        for id in range(self.resolution):
+            
+            self.sigma.append(np.where(self.x[id][:self.m_temp[id]] <= self.N_c)[0])   # small population classes
+            self.SIGMA.append(np.where(self.x[id][:self.m_temp[id]] > self.N_c)[0])   # large population classes
+
+            self.OMEGA.append([])   # non-critical set
+            self.LAMBDA.append([])   # critical set
+            for i in range(3):
+                for j in self.sigma[id]:
+                    self.OMEGA[id].append(i*self.m_temp[id] + j)
+                for j in self.SIGMA[id]:
+                    self.LAMBDA[id].append(i*self.m_temp[id] + j)
+
+            self.a_ncrit.append(self.a[id][self.OMEGA[id]])   # non-critical events' rates
+            self.a_crit.append(self.a[id][self.LAMBDA[id]])   # critical events' rates
+
+
+    def compute_e(self, tau):
+
+        e = []
+
+        for i in range(self.resolution):
+            if self.a_crit[i].shape[0] > 0 and np.sum(self.a_crit[i]) > 0:
+                e.append(compute_e(self.a_crit[i]))
+            else:
+                e.append(tau+1)
+
+        return e
+
+
+    def Gillespie_apply(self, id):
+
+        # computing the index of the event
+        index = self.LAMBDA[id][Gillespie_extract(self.a_crit[id])]         
+        
+        # updating the state (we do it directly without using the state-change
+        # vector)
+        event_type = index // self.m_temp[id]
+        event_index = index % self.m_temp[id]
+        if event_type == 0:
+            self.x[id][event_index] += 1
+        elif event_type == 1:
+            self.x[id][event_index] -= 1
+        else:
+            self.x[id][event_index] -= 1
+            self.x[id][event_index+1] += 1
+
+
+    def tau_leap_apply(self, h):
+
+        for id in range(self.resolution):
+
+            r = tau_leap_extract(self.a_ncrit[id], h)
+            
+            # using the tau-leap algorithm
+            i = 0
+            for index in self.OMEGA[id]:
+                
+                # updating the state (we do it directly without using the state-change
+                # vector)
+                event_type = index // self.m_temp[id]
+                event_index = index % self.m_temp[id]
+                if event_type == 0:
+                    self.x[id][event_index] += r[i]
+                elif event_type == 1:
+                    self.x[id][event_index] -= r[i]
+                else:
+                    self.x[id][event_index] -= r[i]
+                    self.x[id][event_index+1] += r[i]
+
+                i += 1
+
+
+    # updates population size and 'highest' genotipic class reached
+    def update_parms(self):
+
+        for i in range(self.resolution):
+
+            if self.x[i][self.m_temp[i]+1] > 0:
+                self.m_temp[i] += 1
+            
+            self.N[i] = np.sum(self.x[i])
+
+
+    def return_m_temp(self):
+
+        return np.max(self.m_temp) 
+
+
+    def print_state(self, datafile):
+
+        with open(datafile, 'a') as file:
+            for i in range(self.resolution-1):
+                file.write(f"{self.x[i]},")
+            file.write(f"{self.x[self.resolution-1]}")
+
+
+
+
+
+
+
+
+
+
+    
+        

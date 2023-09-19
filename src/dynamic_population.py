@@ -8,6 +8,7 @@ import stocco_lib as stclb
 
 
 # default parameters
+
 N_0_deflt = 1000   # starting value of the N_tilde parameter (and of the 
                    # true population size)
 m_deflt = 4   # number of genotipic classes
@@ -16,6 +17,7 @@ N_c_deflt = 10   # population threshold for exact evolution (i.e. use of
 epsilon_deflt = 0.04   # parameter of the leaping condition
 fitness_deflt = 'flat'   # kind of fitness distribution over genotipic space
 N_tilde_mod_deflt = 'constant'   # behaviour of the N_tilde parameter
+
 datafile_deflt = 'results.txt'   # file to store results
 output_deflt = 'screen'   # kind of results to store
 
@@ -100,6 +102,11 @@ if __name__ == "__main__":
 
 
 
+    # computing tau-leap time step
+    tau = stclb.compute_tau(epsilon) 
+
+
+
     # main loop (evolution)
 
     m_temp = 1   # 'highest' genotipic class reached so far plus one
@@ -147,10 +154,7 @@ if __name__ == "__main__":
         a_crit = a[LAMBDA]   # critical events' rates
 
 
-        # computing leap time and time to next critical reaction
-
-        tau = stclb.compute_tau(epsilon) 
-
+        # computing time to next critical reaction
 
         e = tau + 1
         if a_crit.shape[0] > 0 and np.sum(a_crit) > 0:
@@ -179,7 +183,6 @@ if __name__ == "__main__":
             else:
                 x[event_index] -= 1
                 x[event_index+1] += 1
-
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)

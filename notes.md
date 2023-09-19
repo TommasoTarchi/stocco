@@ -10,6 +10,6 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
   e static fitness; comparazione di risultati ed efficienza tra ibrido con fixed e dynamic 
   population (con N\_tilde costante)
   - comparazione di risultati (sia tempo che stato finale) usando algo ibrido con fixed population 
-  e tutti tipi di fitness; per lo stato finale mostrare per quali valori e in che percentuale si 
-  ha speciazione
+  e tutti tipi di fitness (magari usare boxplot per tempi); per lo stato finale mostrare per quali valori e 
+  in che percentuale si ha speciazione
   - plot di N e N\_tilde per mostrare che N\_tilde controlla N
