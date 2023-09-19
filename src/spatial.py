@@ -115,6 +115,12 @@ if __name__ == "__main__":
         # updating time and 'highest' genotipic class reached so far
         t += h
         m_temp = wrld.return_m_temp()
+        wrld.update_parms()
+
+
+
+    # updating total population distribution
+    wrld.update_parms_tot()
 
 
 

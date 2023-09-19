@@ -294,6 +294,11 @@ class world:
                 i += 1
 
 
+    def return_m_temp(self):
+
+        return np.max(self.m_temp) 
+
+
     # updates population size and 'highest' genotipic class reached
     def update_parms(self):
 
@@ -305,17 +310,22 @@ class world:
             self.N[i] = np.sum(self.x[i])
 
 
-    def return_m_temp(self):
+    def update_parms_tot(self):
 
-        return np.max(self.m_temp) 
+        self.x_tot = np.zeros(self.m+1)
+        self.N_tot = 0
 
+        for i in range(self.resolution):
+            self.x_tot += self.x[i]
+            self.N_tot += self.N[i]
 
+    
     def print_state(self, datafile):
 
         with open(datafile, 'a') as file:
-            for i in range(self.resolution-1):
+            for i in range(self.resolution):
                 file.write(f"{self.x[i]},")
-            file.write(f"{self.x[self.resolution-1]}")
+            file.write(f"{self.x_tot}")
 
 
 
