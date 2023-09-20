@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
 
 
-    t = 0
+    t = 0.0
 
 
     
@@ -86,11 +86,8 @@ if __name__ == "__main__":
     m_temp = 1   # 'highest' genotipic class reached so far plus one
     while m_temp != m+1:
 
-
-        wrld.compute_fitness()
-
         
-        wrld.compute_rates(N_tilde)
+        wrld.compute_rates(N_tilde / resolution)
 
 
         wrld.compute_partition()
@@ -113,9 +110,9 @@ if __name__ == "__main__":
         
 
         # updating time and 'highest' genotipic class reached so far
-        t += h
-        m_temp = wrld.return_m_temp()
+        t += h 
         wrld.update_parms()
+        m_temp = wrld.return_m_temp()
 
 
 
@@ -139,14 +136,3 @@ if __name__ == "__main__":
         with open(datafile, 'a') as file:
             file.write(f"{t},{elapsed_time},")
         wrld.print_state(datafile)
-
-
-
-
-
-
-
-
-
-
-

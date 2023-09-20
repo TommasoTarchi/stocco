@@ -189,25 +189,19 @@ class world:
             for i in range(self.m):
                 self.f[i] = self.f[i]**(self.m-math.fabs(self.m-2*i))
 
-        self.mu = np.full(self.m, 1/self.N_tot)   # mutation rate distribution
-
-
-    def compute_fitness(self):
-
-        self.f_part = []
-
-        for i in range(self.resolution):
-
-            self.f_part.append(self.f[:self.m_temp[i]])   # fitness values that will be actually used
-                                                            # at this iteration
+        self.mu = np.full(self.m, 1/self.N_tot*self.resolution)   # mutation rate distribution
     
+
     # computes events' rates
     def compute_rates(self, N_tilde):
                 
         self.a = []
         
         for i in range(self.resolution):
-            self.a.append(compute_rates_dyn_pop(self.x[i][:self.m_temp[i]], N_tilde, self.f_part[i], self.mu[:self.m_temp[i]])) 
+            try:
+                self.a.append(compute_rates_dyn_pop(self.x[i][:self.m_temp[i]], N_tilde, self.f[:self.m_temp[i]], self.mu[:self.m_temp[i]])) 
+            except:
+                print(f"error with x: {self.x[i]} and f: {self.f[:self.m_temp[i]]}")
 
 
     # partitioning the set of events in non-critical and critical ones
@@ -304,7 +298,7 @@ class world:
 
         for i in range(self.resolution):
 
-            if self.x[i][self.m_temp[i]+1] > 0:
+            if self.x[i][self.m_temp[i]] > 0:
                 self.m_temp[i] += 1
             
             self.N[i] = np.sum(self.x[i])
