@@ -15,4 +15,5 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
   valori e in che percentuale si ha speciazione
   - plot di N e N\_tilde per mostrare che N\_tilde controlla N
   - comportamento di algoritmo spaziale (magari creare schema del mondo con colore per indicare
-  genotipo medio in ogni area
+  genotipo medio in ogni area): al variare della resolution e confronto tra caso con neighbours e 
+  senza
