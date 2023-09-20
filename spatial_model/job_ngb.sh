@@ -21,7 +21,7 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/data.csv
+datafile=$(pwd)/data_ngb.csv
 
 echo "# " > "$datafile"
 echo "# " >> "$datafile"
