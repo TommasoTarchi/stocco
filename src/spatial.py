@@ -133,6 +133,6 @@ if __name__ == "__main__":
             file.write(f"{t},{elapsed_time}")
 
     elif output == 'final_state':
-        with open(datafile, 'a') as file:
-            file.write(f"{t},{elapsed_time},")
+        #with open(datafile, 'a') as file:
+        #    file.write(f"{t},{elapsed_time},")
         wrld.print_state(datafile)

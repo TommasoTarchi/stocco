@@ -28,7 +28,7 @@ echo "# " >> "$datafile"
 echo "# " >> "$datafile"
 echo "# number of genotipic classes: 3" >> "$datafile"
 echo "# population size: variable with N_tilde=10000" >> "$datafile"
-echo "# resolution: 4" >> "$datafile"
+echo "# resolution: 16" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "simulation_time,elapsed_time,state_area0,state_area1,state_area2,state_area3,state_world" >> "$datafile"
