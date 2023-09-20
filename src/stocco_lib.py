@@ -422,6 +422,9 @@ class world_w_neighbours:
                 self.neigh[i].append(i-self.dim)
                 self.neigh[i].append(i+self.dim)
 
+            for i in range(self.resolution):
+                self.neigh[i] = [int(el) for el in self.neigh[i]]
+
 
     # computes events' rates
     def compute_rates(self, N_tilde):
