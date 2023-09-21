@@ -24,7 +24,7 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/data_const.csv
+datafile=$(pwd)/data_spatial.csv
 
 echo "# data to see the effect of the paramenter N_tilde on the population" > "$datafile"
 echo "# size in simulations with spatial algorithm" >> "$datafile"
@@ -36,7 +36,7 @@ echo "# resolution of the 'world': 16" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "" >> "$datafile"
-python3 ../src/dynamic_population.py --m 4 --N_0 10000 --fitness "static_inc" --output "population" --datafile "$datafile"
+python3 ../src/spatial_ngb.py --resolution 16 --m 4 --N_0 10000 --fitness "static_inc" --output "population" --datafile "$datafile"
 
 
 module purge
