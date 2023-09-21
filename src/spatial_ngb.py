@@ -1,6 +1,9 @@
 import time
 import argparse
 import stocco_lib as stclb
+###############################
+import math
+###############################
 
 
 
@@ -78,7 +81,7 @@ if __name__ == "__main__":
 
     # computing tau-leap time step (we divide by resolution because we have
     # number of areas on which perform evolution = resolution)
-    tau = stclb.compute_tau(epsilon / resolution) 
+    tau = stclb.compute_tau(epsilon / resolution)
 
 
 
@@ -91,9 +94,15 @@ if __name__ == "__main__":
         wrld.compute_rates(N_tilde / resolution)
 
 
+        #############################################
+        with open("pippo.txt", 'a') as file:
+            file.write(f"{wrld.x}\n")
+        #############################################
+
+
         wrld.compute_partition()
 
-        
+
         # computing time to next critical event
         e = wrld.compute_e(tau)
         e.append(tau)
@@ -108,25 +117,13 @@ if __name__ == "__main__":
 
         # applying tau-leap algorithm
         wrld.tau_leap_apply(h)
-        
-
-        #############################################
-        wrld.print_state("pippo.txt")
-        with open("pippo.txt", 'a') as file:
-            file.write("\n")
-        #############################################
 
 
         # updating time and 'highest' genotipic class reached so far
         t += h 
         wrld.update_parms()
-        m_temp = wrld.return_m_temp()
-
-
-        #############################################
         wrld.update_parms_tot()
-        print(f"N:  {wrld.N_tot}")
-        #############################################
+        m_temp = wrld.return_m_temp()
 
 
         # the algorithm did not converge within an acceptable time
@@ -150,12 +147,21 @@ if __name__ == "__main__":
 
     if output == 'screen':
         print(f"final state:  {wrld.x_tot}\nsimulation time:  {t}\nelapsed time:  {elapsed_time} s\n")
+        ###############################
+        dim = int(math.sqrt(resolution))
+        for i in range(dim):
+            for j in range(dim):
+                print(f"{wrld.x[i*dim+j]}  ", end="")
+            print()
+        ###############################
     
     elif output == 'time':
         with open(datafile, 'a') as file:
             file.write(f"{t},{elapsed_time}")
 
     elif output == 'final_state':
-        #with open(datafile, 'a') as file:
-        #    file.write(f"{t},{elapsed_time},")
-        wrld.print_state(datafile)
+        with open(datafile, 'a') as file:
+            file.write(f"{t},{elapsed_time},")
+            for i in range(resolution):
+                file.write(f"{wrld.x[i]},")
+            file.write(f"{wrld.x_tot}")

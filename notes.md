@@ -13,9 +13,8 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
   - comparazione di risultati (sia tempo che stato finale) usando algo ibrido con fixed population 
   e tutti tipi di fitness (magari usare boxplot per tempi); per lo stato finale mostrare per quali 
   valori e in che percentuale si ha speciazione
-  - plot di N e N\_tilde per mostrare che N\_tilde controlla N
+  - plot di N e N\_tilde per mostrare che N\_tilde controlla N sia con modello dinamico non spaziale
+  che spaziale
   - comportamento di algoritmo spaziale (magari creare schema del mondo con colore per indicare
   genotipo medio in ogni area): al variare della resolution e confronto tra caso con neighbours e 
-  senza
-
-- Rirunnare tutti job che coinvolgono algoritmo con dynamic population
+  senza (controllare che effettivamente ci sia un effetto delle neighbouring areas)

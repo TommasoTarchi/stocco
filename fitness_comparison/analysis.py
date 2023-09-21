@@ -7,6 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--m', type=int, choices=[4, 20])
+args = parser.parse_args()
 datafile = ''
 if args.m == 4:
     datafile = 'data_m4.csv'

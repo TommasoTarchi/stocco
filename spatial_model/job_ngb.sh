@@ -32,9 +32,9 @@ echo "# resolution: 16" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "simulation_time,elapsed_time,state_area0,state_area1,state_area2,state_area3,state_world" >> "$datafile"
-for index in {1..10}
+for index in {1..20}
 do
-    python3 ../src/spatial_ngb.py --m 3 --N_0 10000 --fitness "static_inc" --resolution 16 --output "final_state" --datafile "$datafile"
+    python3 ../src/spatial_ngb.py --m 3 --N_0 10000 --fitness "static_inc" --resolution 25 --output "final_state" --datafile "$datafile"
     echo >> "$datafile"
 done 
 

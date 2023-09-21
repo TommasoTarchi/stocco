@@ -194,7 +194,7 @@ class world:
     # computes events' rates
     def compute_rates(self, N_tilde):
                 
-        self.a = []
+        self.a = [] 
         
         for i in range(self.resolution):
             self.a.append(compute_rates_dyn_pop(self.x[i][:self.m_temp[i]], N_tilde, self.f[:self.m_temp[i]], self.mu[:self.m_temp[i]])) 
@@ -438,23 +438,17 @@ class world_w_neighbours:
                                                                # number of neighbours
             # distribution of population in genotipic space adjusted depending on the neighbours' 
             # distributions (the contribute of the neighbours is reduced of a factor 4)
-            x_adj = self.x[i][:self.m_temp[i]]
+            x_adj = self.x[i][:self.m_temp[i]].copy()
             for ngb_id in self.neigh[i]:
-                x_adj += self.x[ngb_id][:self.m_temp[i]] // 4
+                for j in range(x_adj.shape[0]):
+                    if x_adj[j] > 0:   # to avoid negative population in Gillespie algorithm
+                        x_adj[j] += self.x[ngb_id][j] // 4
+            x_adj[x_adj < 0] = 0   # to avoid negative rates
 
-            #######################################
-            with open("x_adj.txt", 'a') as file:
-                file.write(f"{x_adj}, ")
-            #######################################
+            a = compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
+            a /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
 
-            self.a.append(compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])) 
-
-        #######################################
-        with open("x_adj.txt", 'a') as file:
-            file.write("\n")
-        with open("rates.txt", 'a') as file:
-            file.write(f"{self.a}\n")
-        #######################################
+            self.a.append(a) 
 
 
     # partitioning the set of events in non-critical and critical ones
@@ -501,11 +495,7 @@ class world_w_neighbours:
     def Gillespie_apply(self, id):
 
         # computing the index of the event
-        index = self.LAMBDA[id][Gillespie_extract(self.a_crit[id])]         
-
-        #########################################
-        print("gillespie applied")
-        #########################################
+        index = self.LAMBDA[id][Gillespie_extract(self.a_crit[id])]
         
         # updating the state (we do it directly without using the state-change
         # vector)
@@ -525,7 +515,7 @@ class world_w_neighbours:
         for id in range(self.resolution):
 
             r = tau_leap_extract(self.a_ncrit[id], h)
-            
+
             # using the tau-leap algorithm
             i = 0
             for index in self.OMEGA[id]:
@@ -568,26 +558,4 @@ class world_w_neighbours:
 
         for i in range(self.resolution):
             self.x_tot += self.x[i]
-            self.N_tot += self.N[i]
-
-    
-    def print_state(self, datafile):
-
-        with open(datafile, 'a') as file:
-            for i in range(self.resolution):
-                file.write(f"{self.x[i]},")
-            file.write(f"{self.x_tot}")
-
-
-
-
-
-
-
-
-
-
-
-
-    
-        
+            self.N_tot += self.N[i] 

@@ -89,7 +89,7 @@ if __name__ == "__main__":
         
         wrld.compute_rates(N_tilde / resolution)
 
-
+        
         wrld.compute_partition()
 
         
