@@ -1,9 +1,6 @@
 import time
 import argparse
 import stocco_lib as stclb
-###############################
-import math
-###############################
 
 
 
@@ -94,12 +91,6 @@ if __name__ == "__main__":
         wrld.compute_rates(N_tilde / resolution)
 
 
-        #############################################
-        with open("pippo.txt", 'a') as file:
-            file.write(f"{wrld.x}\n")
-        #############################################
-
-
         wrld.compute_partition()
 
 
@@ -147,13 +138,6 @@ if __name__ == "__main__":
 
     if output == 'screen':
         print(f"final state:  {wrld.x_tot}\nsimulation time:  {t}\nelapsed time:  {elapsed_time} s\n")
-        ###############################
-        dim = int(math.sqrt(resolution))
-        for i in range(dim):
-            for j in range(dim):
-                print(f"{wrld.x[i*dim+j]}  ", end="")
-            print()
-        ###############################
     
     elif output == 'time':
         with open(datafile, 'a') as file:
