@@ -20,7 +20,6 @@ def compute_rates(x, f, mu):
         a[j*(m-1):(j+1)*(m-1)] *= x[j]
     a[:m*(m-1)] /= norm
 
-
     # computing mutation rates
     a[m*(m-1):m*m] = mu*x
 
@@ -153,7 +152,7 @@ class world:
 
     def __init__(self, N_0, m, N_c, fitness, resolution):
         
-        self.N_tot = N_0 - N_0 % resolution   # initial population
+        self.N_tot = N_0   # initial population
         self.m = m   # number of genotipic classes
         self.N_c = N_c   # threshold for small populations
         self.fitness = fitness
@@ -166,7 +165,7 @@ class world:
         self.x_tot[0] = self.N_tot
 
         # single areas' distributions in genotipic space
-        self.N = np.repeat(self.resolution, self.N_tot / self.resolution)
+        self.N = np.repeat(self.N_tot / self.resolution, self.resolution)
         self.x = []
         for i in range(self.resolution):
             self.x.append(self.x_tot / self.resolution)
@@ -221,9 +220,9 @@ class world:
             self.LAMBDA.append([])   # critical set
             for i in range(3):
                 for j in self.sigma[id]:
-                    self.OMEGA[id].append(i*self.m_temp[id] + j)
-                for j in self.SIGMA[id]:
                     self.LAMBDA[id].append(i*self.m_temp[id] + j)
+                for j in self.SIGMA[id]:
+                    self.OMEGA[id].append(i*self.m_temp[id] + j)
 
             self.a_ncrit.append(self.a[id][self.OMEGA[id]])   # non-critical events' rates
             self.a_crit.append(self.a[id][self.LAMBDA[id]])   # critical events' rates
@@ -327,20 +326,20 @@ class world_w_neighbours:
 
     def __init__(self, N_0, m, N_c, fitness, resolution):
         
-        self.N_tot = N_0 - N_0 % resolution   # initial population
+        self.N_tot = N_0    # initial population
         self.m = m   # number of genotipic classes
         self.N_c = N_c   # threshold for small populations
         self.fitness = fitness
         self.resolution = resolution   # number of areas in which
                                        # we divide the world
-        self.dim = math.sqrt(self.resolution)
+        self.dim = int(math.sqrt(self.resolution))
         
         # total population distribution in genotipic space
         self.x_tot = np.zeros(self.m+1)
         self.x_tot[0] = self.N_tot
 
         # single areas' distributions in genotipic space
-        self.N = np.repeat(self.resolution, self.N_tot / self.resolution)
+        self.N = np.repeat(self.N_tot / self.resolution, self.resolution)
         self.x = []
         for i in range(self.resolution):
             self.x.append(self.x_tot / self.resolution)
@@ -362,8 +361,6 @@ class world_w_neighbours:
             self.f += 0.01
             for i in range(self.m):
                 self.f[i] = self.f[i]**(self.m-math.fabs(self.m-2*i))
-
-        self.mu = np.full(self.m, 1/self.N_tot*self.resolution)   # mutation rate distribution
 
 
     # find each area's neighbour areas
@@ -422,8 +419,12 @@ class world_w_neighbours:
                 self.neigh[i].append(i-self.dim)
                 self.neigh[i].append(i+self.dim)
 
+
+    def compute_mu(self):
+
+        self.mu = []
         for i in range(self.resolution):
-            self.neigh[i] = [int(el) for el in self.neigh[i]]
+            self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
 
 
     # computes events' rates
@@ -441,7 +442,19 @@ class world_w_neighbours:
             for ngb_id in self.neigh[i]:
                 x_adj += self.x[ngb_id][:self.m_temp[i]] // 4
 
-            self.a.append(compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[:self.m_temp[i]])) 
+            #######################################
+            with open("x_adj.txt", 'a') as file:
+                file.write(f"{x_adj}, ")
+            #######################################
+
+            self.a.append(compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])) 
+
+        #######################################
+        with open("x_adj.txt", 'a') as file:
+            file.write("\n")
+        with open("rates.txt", 'a') as file:
+            file.write(f"{self.a}\n")
+        #######################################
 
 
     # partitioning the set of events in non-critical and critical ones
@@ -464,9 +477,9 @@ class world_w_neighbours:
             self.LAMBDA.append([])   # critical set
             for i in range(3):
                 for j in self.sigma[id]:
-                    self.OMEGA[id].append(i*self.m_temp[id] + j)
-                for j in self.SIGMA[id]:
                     self.LAMBDA[id].append(i*self.m_temp[id] + j)
+                for j in self.SIGMA[id]:
+                    self.OMEGA[id].append(i*self.m_temp[id] + j)
 
             self.a_ncrit.append(self.a[id][self.OMEGA[id]])   # non-critical events' rates
             self.a_crit.append(self.a[id][self.LAMBDA[id]])   # critical events' rates
@@ -489,6 +502,10 @@ class world_w_neighbours:
 
         # computing the index of the event
         index = self.LAMBDA[id][Gillespie_extract(self.a_crit[id])]         
+
+        #########################################
+        print("gillespie applied")
+        #########################################
         
         # updating the state (we do it directly without using the state-change
         # vector)

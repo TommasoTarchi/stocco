@@ -17,3 +17,5 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
   - comportamento di algoritmo spaziale (magari creare schema del mondo con colore per indicare
   genotipo medio in ogni area): al variare della resolution e confronto tra caso con neighbours e 
   senza
+
+- Rirunnare tutti job che coinvolgono algoritmo con dynamic population

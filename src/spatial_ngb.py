@@ -5,7 +5,6 @@ import stocco_lib as stclb
 
 
 
-
 # default parameters
 
 N_0_deflt = 1000   # starting value of the N_tilde parameter (and of the 
@@ -46,7 +45,7 @@ if __name__ == "__main__":
 
 
     N_tilde_mod = args.N_tilde_mod
-    N_0 = args.N_0 - args.N_0 % args.resolution
+    N_0 = args.N_0 // args.resolution * args.resolution
     N_tilde = N_0
     m = args.m
     N_c = args.N_c
@@ -58,6 +57,7 @@ if __name__ == "__main__":
     # initializing the world
     wrld = stclb.world_w_neighbours(N_0, m, N_c, args.fitness, args.resolution)
     wrld.find_neighbours()
+    wrld.compute_mu()
 
 
     
@@ -110,10 +110,29 @@ if __name__ == "__main__":
         wrld.tau_leap_apply(h)
         
 
+        #############################################
+        wrld.print_state("pippo.txt")
+        with open("pippo.txt", 'a') as file:
+            file.write("\n")
+        #############################################
+
+
         # updating time and 'highest' genotipic class reached so far
         t += h 
         wrld.update_parms()
         m_temp = wrld.return_m_temp()
+
+
+        #############################################
+        wrld.update_parms_tot()
+        print(f"N:  {wrld.N_tot}")
+        #############################################
+
+
+        # the algorithm did not converge within an acceptable time
+        if t > 50000 + m*2000:
+            t = 'not_converge'
+            break
 
 
 
@@ -129,7 +148,10 @@ if __name__ == "__main__":
 
     # printing results
 
-    if output == 'time':
+    if output == 'screen':
+        print(f"final state:  {wrld.x_tot}\nsimulation time:  {t}\nelapsed time:  {elapsed_time} s\n")
+    
+    elif output == 'time':
         with open(datafile, 'a') as file:
             file.write(f"{t},{elapsed_time}")
 

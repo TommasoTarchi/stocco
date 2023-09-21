@@ -145,9 +145,9 @@ if __name__ == "__main__":
         LAMBDA = []   # critical set
         for i in range(3):
             for j in sigma:
-                OMEGA.append(i*m_temp + j)
-            for j in SIGMA:
                 LAMBDA.append(i*m_temp + j)
+            for j in SIGMA:
+                OMEGA.append(i*m_temp + j)
 
 
         a_ncrit = a[OMEGA]   # non-critical events' rates
@@ -183,6 +183,7 @@ if __name__ == "__main__":
             else:
                 x[event_index] -= 1
                 x[event_index+1] += 1
+
 
            
         r = stclb.tau_leap_extract(a_ncrit, h)

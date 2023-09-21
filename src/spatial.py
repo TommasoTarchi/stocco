@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
 
     N_tilde_mod = args.N_tilde_mod
-    N_0 = args.N_0 - args.N_0 % args.resolution
+    N_0 = args.N_0 // args.resolution * args.resolution
     N_tilde = N_0
     m = args.m
     N_c = args.N_c
@@ -115,6 +115,12 @@ if __name__ == "__main__":
         m_temp = wrld.return_m_temp()
 
 
+        # the algorithm did not converge within an acceptable time
+        if t > 50000 + m*2000:
+            t = 'not_converge'
+            break
+
+
 
     # updating total population distribution
     wrld.update_parms_tot()
@@ -128,7 +134,10 @@ if __name__ == "__main__":
 
     # printing results
 
-    if output == 'time':
+    if output == 'screen':
+        print(f"final state:  {wrld.x_tot}\nsimulation time:  {t}\nelapsed time:  {elapsed_time} s\n")
+    
+    elif output == 'time':
         with open(datafile, 'a') as file:
             file.write(f"{t},{elapsed_time}")
 
