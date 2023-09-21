@@ -9,7 +9,7 @@ algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
   - comparazione di risultati ed efficienza di algoritmi esatto e ibrido usando fixed population 
   e static fitness; comparazione di risultati ed efficienza tra ibrido con fixed e dynamic 
   population (con N\_tilde costante); comparazione di efficienza di spaziale con diversi valori di 
-  resolution (caso base: hybrid con fixed population)
+  resolution (caso base: hybrid con dynamic population)
   - comparazione di risultati (sia tempo che stato finale) usando algo ibrido con fixed population 
   e tutti tipi di fitness (magari usare boxplot per tempi); per lo stato finale mostrare per quali 
   valori e in che percentuale si ha speciazione

@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument('--N_tilde_mod', choices=['constant',], default=N_tilde_mod_deflt)
     parser.add_argument('--resolution', type=int, choices=[i**2 for i in range(1, 1000)], default=resolution_deflt)
     parser.add_argument('--datafile', default=datafile_deflt)
-    parser.add_argument('--output', choices=['screen', 'time', 'final_state'], default=output_deflt)
+    parser.add_argument('--output', choices=['screen', 'time', 'final_state', 'population'], default=output_deflt)
 
     args = parser.parse_args()
 
@@ -115,6 +115,11 @@ if __name__ == "__main__":
         wrld.update_parms()
         wrld.update_parms_tot()
         m_temp = wrld.return_m_temp()
+
+
+        if output == 'population':
+            with open(datafile, 'a') as file:
+                file.write(f"{N_0},{wrld.N_tot}\n") 
 
 
         # the algorithm did not converge within an acceptable time

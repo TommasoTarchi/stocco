@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-### script to run one simulation with dynamic population to se whether the parameter N_tilde
+### script to run one simulation with dynamic population to see whether the parameter N_tilde
 ### actually controls the true population N, on Orfeo, cluster hosted at Area Science Park 
 ### (Trieste, Italy)
 ###
@@ -35,10 +35,7 @@ echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "" >> "$datafile"
-for index in {1..20}
-do
-    python3 ../src/dynamic_population.py --m 4 --N_0 10000 --N_tilde_mod "growing" --fitness "static_inc" --output "population" --datafile "$datafile"
-done 
+python3 ../src/dynamic_population.py --m 4 --N_0 10000 --N_tilde_mod "growing" --fitness "static_inc" --output "population" --datafile "$datafile"
 
 
 module purge

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-### script to run one simulation with dynamic population to see whether the parameter N_tilde
+### script to run one simulation with spatial algorithm to see whether the parameter N_tilde
 ### actually controls the true population N, on Orfeo, cluster hosted at Area Science Park 
 ### (Trieste, Italy)
 ###
@@ -27,11 +27,12 @@ export OMP_NUM_THREADS=10
 datafile=$(pwd)/data_const.csv
 
 echo "# data to see the effect of the paramenter N_tilde on the population" > "$datafile"
-echo "# size in simulations with dynamic population" >> "$datafile"
+echo "# size in simulations with spatial algorithm" >> "$datafile"
 echo "#" >> "$datafile"
 echo "# N_tilde: constant at 10000" >> "$datafile"
 echo "# fitness: static increasing" >> "$datafile"
 echo "# number of genotipic classes: 4" >> "$datafile"
+echo "# resolution of the 'world': 16" >> "$datafile"
 echo "# " >> "$datafile"
 
 echo "" >> "$datafile"
