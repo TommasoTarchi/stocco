@@ -1,72 +1,68 @@
 import pandas as pd
-import argparse
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 
 # Read the CSV file into a Pandas DataFrame
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--m', type=int, choices=[4, 20])
-args = parser.parse_args()
-datafile = ''
-if args.m == 4:
-    datafile = 'data_m4.csv'
-elif args.m == 20:
-    datafile = 'data_m20.csv'
-
+datafile = 'data_m4.csv'
 df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 
 
+# Create a boxplot to compare the four quantities
+plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+
+# Use the boxplot() method on the DataFrame
+df.boxplot(column=["flat_simul", "static_inc_simul", "static_mount_simul", "dynamic_simul"])
+
+# Set labels and title
+#plt.xlabel("")
+plt.ylabel("simulation time")
+plt.title("Simulation time with dynamic population and different fitness landscapes")
+
+# Save the plot as a PNG file
+plt.savefig("simul_time.png")
 
 
+data = df[["flat_state", "static_inc_state", "static_dec_state", "static_munt_state", "dynamic_state"]]
 
+# Choose the row you want to plot (e.g., row 0)
+row_index = 0
 
+# Select the specific row based on the index
+selected_row = data.iloc[row_index]
 
-# Calculate means and standard deviations
+# Extract class labels (assuming they are the column names except the first column)
+class_labels = ["flat", "static increasing", "static decreasing", "static 'mountain'", "static 'mountain' + dynamic"]
 
-mean_flat = df['flat_simul'].mean()
-stddev_flat = df['flat_simul'].std()
+# Extract counts for each class
+class_counts = selected_row.values[:]  # Exclude the first column
 
-mean_static_inc = df['static_inc_simul'].mean()
-stddev_static_inc = df['static_inc_simul'].std()
+# Create histograms for each class
+plt.figure(figsize=(10, 6))  # Optional: Set the figure size
 
-# commented because of the non convenrgence of the algorithm
-# mean_static_dec = df['static_dec_simul'].mean()
-# stddev_static_dec = df['static_dec_simul'].std()
+for i, class_label in enumerate(class_labels):
+    # Convert the counts to a list of values for the current class
+    class_data = [i + 1] * int(class_counts[i])  # Repeat class label based on count
 
-mean_static_mount = df['static_mount_simul'].mean()
-stddev_static_mount = df['static_mount_simul'].std()
+    # Create a histogram for the current class
+    plt.hist(
+        class_data,
+        bins=np.arange(0.5, len(class_labels) + 1.5),  # Create bins for each class
+        alpha=0.5,
+        label=class_label
+    )
 
-mean_dynamic = df['dynamic_simul'].mean()
-stddev_dynamic = df['dynamic_simul'].std()
+# Set labels and title
+plt.xlabel('genotipic space')
+plt.ylabel('population')
+plt.title('Final state with fixed population and different fitness landscapes')
 
+# Add class labels to the x-axis
+plt.xticks(range(1, len(class_labels) + 1), class_labels)
 
-# Print the results
+# Add a legend
+plt.legend()
 
-print("flat fitness:")
-print(f"Mean: {mean_flat}")
-print(f"Standard Deviation: {stddev_flat}\n")
-
-print()
-
-print("static increasing fitness:")
-print(f"Mean: {mean_static_inc}")
-print(f"Standard Deviation: {stddev_static_inc}\n")
-
-print()
-
-#print("static decreasing fitness:")
-#print(f"Mean: {mean_static_dec}")
-#print(f"Standard Deviation: {stddev_static_dec}\n")
-
-print()
-
-print("static 'mountain' fitness:")
-print(f"Mean: {mean_static_mount}")
-print(f"Standard Deviation: {stddev_static_mount}\n")
-
-print()
-
-print("dynamic fitness:")
-print(f"Mean: {mean_dynamic}")
-print(f"Standard Deviation: {stddev_dynamic}\n")
+# Show the plot or save it as an image file
+plt.savefig('final_states.png')
