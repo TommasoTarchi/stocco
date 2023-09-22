@@ -7,7 +7,7 @@ import numpy as np
 df = pd.read_csv('data_ngb.csv', comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 df = df.drop(columns=['simulation_time', 'elapsed_time', 'state_world'])
 data = df.values
-col = np.zeros(data.shape[0])
+colors = np.zeros(data.shape[0])
 
 # Define colors for classes 1 to 4 (light to dark)
 class_colors = ['#FFD700', '#FFA500', '#FF8C00', '#FF4500']  # Adjust colors as needed
@@ -22,4 +22,4 @@ for i in range(data.shape[0]):
     ]
 
     # Convert the average color to hexadecimal format
-    col[i] = "#{:02X}{:02X}{:02X}".format(*average_color)
+    colors[i] = "#{:02X}{:02X}{:02X}".format(*average_color)
