@@ -545,6 +545,9 @@ class world_w_neighbours:
     def update_parms(self):
 
         for i in range(self.resolution):
+            self.x[i][self.x[i] < 0] = 0
+
+        for i in range(self.resolution):
 
             if self.x[i][self.m_temp[i]] > 0:
                 self.m_temp[i] += 1
