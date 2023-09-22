@@ -27,12 +27,12 @@ plt.savefig("simul_time.png")
 data = df[["flat_state", "static_inc_state", "static_dec_state", "static_munt_state", "dynamic_state"]]
 
 # Choose the row you want to plot (e.g., row 0)
-row_index = 0
+row_index = 0   # "cherrypicked"
 
 # Select the specific row based on the index
 selected_row = data.iloc[row_index]
 
-# Extract class labels (assuming they are the column names except the first column)
+# defining class labels
 class_labels = ["flat", "static increasing", "static decreasing", "static 'mountain'", "static 'mountain' + dynamic"]
 
 # Extract counts for each class
@@ -64,5 +64,5 @@ plt.xticks(range(1, len(class_labels) + 1), class_labels)
 # Add a legend
 plt.legend()
 
-# Show the plot or save it as an image file
+# save plot as an image file
 plt.savefig('final_states.png')

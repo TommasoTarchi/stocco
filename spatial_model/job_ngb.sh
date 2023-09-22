@@ -23,20 +23,23 @@ export OMP_NUM_THREADS=10
 
 datafile=$(pwd)/data_ngb.csv
 
-echo "# " > "$datafile"
+echo "# data for final state of spatial model to check mutual influence" > "$datafile"
+echo "# among neighbour areas' distributions" >> "$datafile"
 echo "# " >> "$datafile"
-echo "# " >> "$datafile"
-echo "# number of genotipic classes: 3" >> "$datafile"
-echo "# population size: variable with N_tilde=10000" >> "$datafile"
-echo "# resolution: 16" >> "$datafile"
+echo "# number of genotipic classes: 4" >> "$datafile"
+echo "# N_tilde: fixed to 1000000" >> "$datafile"
+echo "# fitness landscape: static increasing" >> "$datafile"
+echo "# resolution: 100" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "simulation_time,elapsed_time,state_area0,state_area1,state_area2,state_area3,state_world" >> "$datafile"
-for index in {1..20}
+echo -n "simulation_time,elapsed_time," >> "$datafile"
+for i in {1..100}
 do
-    python3 ../src/spatial_ngb.py --m 4 --N_0 1000000 --fitness "static_inc" --resolution 100 --output "final_state" --datafile "$datafile"
-    echo >> "$datafile"
-done 
+    echo -n state_area"$i", >> $datafile
+done
+echo -n "state_world" >> "$datafile"
+
+python3 ../src/spatial_ngb.py --m 4 --N_0 1000000 --fitness "static_inc" --resolution 100 --output "final_state" --datafile "$datafile"
 
 
 module purge

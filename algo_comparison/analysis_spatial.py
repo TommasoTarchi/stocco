@@ -9,7 +9,7 @@ df = pd.read_csv('data_spatial.csv', comment='#', skip_blank_lines=True).dropna(
 
 
 # Create a boxplot to compare the four quantities
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 
 # Use the boxplot() method on the DataFrame
 df.boxplot(column=["base_elpsd", "4_elpsd", "16_elpsd", "36_elpsd", "64_elpsd"])
@@ -24,7 +24,7 @@ plt.savefig("eff_spatial.png")
 
 
 # Create a boxplot to compare the four quantities
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 
 # Use the boxplot() method on the DataFrame
 df.boxplot(column=["base_simul", "4_simul", "16_simul", "36_simul", "64_simul"])

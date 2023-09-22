@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 # Read the data file into a DataFrame
 data = pd.read_csv('data_const.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity1' with the actual column name for quantity 1
-N = data['N']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
+N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N_tilde, label='N_tilde', marker='o', linestyle='-')
 plt.plot(time, N, label='N', marker='s', linestyle='--')
 
@@ -22,20 +22,20 @@ plt.ylabel('population size')
 plt.title('Population in non spatial model with fixed N_tilde')
 plt.legend()
 
-# Show the plot or save it as an image file
+# save plot as an image file
 plt.savefig('const.png')
 
 
 # Read the data file into a DataFrame
 data = pd.read_csv('data_log.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity1' with the actual column name for quantity 1
-N = data['N']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
+N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N_tilde, label='N_tilde', marker='o', linestyle='-')
 plt.plot(time, N, label='N', marker='s', linestyle='--')
 
@@ -45,57 +45,57 @@ plt.ylabel('population size')
 plt.title('Population in non spatial model with log-increasing N_tilde')
 plt.legend()
 
-# Show the plot or save it as an image file
+# save plot as an image file
 plt.savefig('log.png')
 
 
 # Read the data file into a DataFrame
 data = pd.read_csv('data_spatial_1.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
 N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N_tilde, label='N_tilde', marker='o', linestyle='-')
 plt.plot(time, N, label='N_1', marker='s', linestyle='--')
 
 # Read the data file into a DataFrame
 data = pd.read_csv('data_spatial_2.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
 N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N, label='N_2', marker='s', linestyle='--')
 
 # Read the data file into a DataFrame
 data = pd.read_csv('data_spatial_3.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
 N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N, label='N_3', marker='s', linestyle='--')
 
 # Read the data file into a DataFrame
 data = pd.read_csv('data_spatial_4.csv')
 
-# Extract the time, quantity1, and quantity2 columns
-time = data['t']  # Replace 'Time' with the actual column name for time
-N_tilde = data['N_tilde']  # Replace 'Quantity2' with the actual column name for quantity 2
+# Extract columns
+time = data['t']
+N_tilde = data['N_tilde']
 N = data['N']
 
 # Create a plot
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+plt.figure(figsize=(10, 6))
 plt.plot(time, N, label='N_4', marker='s', linestyle='--')
 
 # Set labels and title
@@ -104,5 +104,5 @@ plt.ylabel('population size')
 plt.title('Population in spatial model with fixed N_tilde')
 plt.legend()
 
-# Show the plot or save it as an image file
+# save plot as an image file
 plt.savefig('spatial.png')
