@@ -221,7 +221,7 @@ if __name__ == "__main__":
         # printing population data
         if output == 'population':
             with open(datafile, 'a') as file:
-                file.write(f"{N_tilde},{N}\n")
+                file.write(f"{t},{N_tilde},{N}\n")
 
 
         # the algorithm did not converge within an acceptable time

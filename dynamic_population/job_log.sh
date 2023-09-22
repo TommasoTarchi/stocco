@@ -34,7 +34,7 @@ echo "# fitness: static increasing" >> "$datafile"
 echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "N_tilde,N" >> "$datafile"
+echo "t,N_tilde,N" >> "$datafile"
 python3 ../src/dynamic_population.py --m 4 --N_0 10000 --N_tilde_mod "growing" --fitness "static_inc" --output "population" --datafile "$datafile"
 
 

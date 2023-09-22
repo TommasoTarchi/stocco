@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
         if output == 'population':
             with open(datafile, 'a') as file:
-                file.write(f"{N_0},{wrld.N_tot}\n") 
+                file.write(f"{t},{N_0},{wrld.N_tot}\n") 
 
 
         # the algorithm did not converge within an acceptable time
