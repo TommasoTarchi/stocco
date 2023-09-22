@@ -35,7 +35,7 @@ echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# resolution of the 'world': 16" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "" >> "$datafile"
+echo "N_tilde,N" >> "$datafile"
 python3 ../src/spatial_ngb.py --resolution 16 --m 4 --N_0 10000 --fitness "static_inc" --output "population" --datafile "$datafile"
 
 

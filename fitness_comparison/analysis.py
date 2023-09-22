@@ -17,6 +17,11 @@ elif args.m == 20:
 df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 
 
+
+
+
+
+
 # Calculate means and standard deviations
 
 mean_flat = df['flat_simul'].mean()
