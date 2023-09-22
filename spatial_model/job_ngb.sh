@@ -37,7 +37,7 @@ for i in {1..100}
 do
     echo -n state_area"$i", >> $datafile
 done
-echo -n "state_world" >> "$datafile"
+echo "state_world" >> "$datafile"
 
 python3 ../src/spatial_ngb.py --m 4 --N_0 1000000 --fitness "static_inc" --resolution 100 --output "final_state" --datafile "$datafile"
 
