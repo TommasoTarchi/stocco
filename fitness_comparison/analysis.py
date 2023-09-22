@@ -24,45 +24,38 @@ plt.title("Simulation time with dynamic population and different fitness landsca
 plt.savefig("simul_time.png")
 
 
-data = df[["flat_state", "static_inc_state", "static_dec_state", "static_munt_state", "dynamic_state"]]
+data = df[["flat_state", "static_inc_state", "static_dec_state", "static_mount_state", "dynamic_state"]]
+
+# Create a boxplot to compare the four quantities
+plt.figure(figsize=(10, 6))  # Optional: Set the figure size
 
 # Choose the row you want to plot (e.g., row 0)
-row_index = 0   # "cherrypicked"
+row_index = 7   # "cherrypicked"
 
 # Select the specific row based on the index
 selected_row = data.iloc[row_index]
 
 # defining class labels
-class_labels = ["flat", "static increasing", "static decreasing", "static 'mountain'", "static 'mountain' + dynamic"]
+fitness_labels = ["flat", "static increasing", "static decreasing", "static 'mountain'", "static 'mountain' + dynamic"]
 
-# Extract counts for each class
-class_counts = selected_row.values[:]  # Exclude the first column
+# Create an array of class labels
+classes = np.arange(4)
 
-# Create histograms for each class
-plt.figure(figsize=(10, 6))  # Optional: Set the figure size
+freq = selected_row["static_mount_state"].strip('[]')
+freq = freq.split()
 
-for i, class_label in enumerate(class_labels):
-    # Convert the counts to a list of values for the current class
-    class_data = [i + 1] * int(class_counts[i])  # Repeat class label based on count
+# Convert the values to a list of floats
+numeric_freq = [float(val) for val in freq][:4]
 
-    # Create a histogram for the current class
-    plt.hist(
-        class_data,
-        bins=np.arange(0.5, len(class_labels) + 1.5),  # Create bins for each class
-        alpha=0.5,
-        label=class_label
-    )
+freq_dict = dict(zip(classes, numeric_freq))
 
-# Set labels and title
-plt.xlabel('genotipic space')
+# Create a bar chart
+plt.bar(classes, numeric_freq, tick_label=classes.tolist())
+
+# Customize the plot (optional)
+plt.xlabel('genotipic class')
 plt.ylabel('population')
-plt.title('Final state with fixed population and different fitness landscapes')
+plt.title('Genotipic class frequencies for different fitness landscapes')
 
-# Add class labels to the x-axis
-plt.xticks(range(1, len(class_labels) + 1), class_labels)
-
-# Add a legend
-plt.legend()
-
-# save plot as an image file
-plt.savefig('final_states.png')
+# Show the bar chart
+plt.savefig("genotipes.png")

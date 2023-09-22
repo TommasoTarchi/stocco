@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     # computing tau-leap time step (we divide by resolution because we have
     # number of areas on which perform evolution = resolution)
-    tau = stclb.compute_tau(epsilon / resolution) 
+    tau = stclb.compute_tau(epsilon) 
 
 
 

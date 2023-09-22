@@ -5,8 +5,8 @@
 # fitness: static increasing
 # number of genotipic classes: 4
 # 
-t,N_tile,N
-10000,10000
+t,N_tilde,N
+0,10000,10000
 0.02,10000,10045.0
 0.04,10000,10076.0
 0.06,10000,10099.0

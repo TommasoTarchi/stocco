@@ -131,17 +131,17 @@ def tau_leap_extract(a, h):
 # function for the recursive algorithm used in Gillespie_extract()
 def find_index(u, a_cum):
 
-        index = a_cum.shape[0] // 2
+    index = a_cum.shape[0] // 2
         
-        if index == 0:
-            return index
-        
-        if u <= a_cum[index-1]:
-            index = find_index(u, a_cum[:index])
-        elif a_cum[index] < u:
-            index += 1 + find_index(u, a_cum[index+1:])
-       
+    if index == 0:
         return index
+        
+    if u <= a_cum[index-1]:
+        index = find_index(u, a_cum[:index])
+    elif a_cum[index] < u:
+        index += 1 + find_index(u, a_cum[index+1:])
+
+    return index
 
 
 
@@ -188,7 +188,7 @@ class world:
             for i in range(self.m):
                 self.f[i] = self.f[i]**(self.m-math.fabs(self.m-2*i))
 
-        self.mu = np.full(self.m, 1/self.N_tot*self.resolution)   # mutation rate distribution
+        self.mu = np.full(self.m, 1 / self.N_tot)   # mutation rate distribution
     
 
     # computes events' rates
@@ -424,7 +424,8 @@ class world_w_neighbours:
 
         self.mu = []
         for i in range(self.resolution):
-            self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
+            #self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
+            self.mu.append(np.full(self.m, 1 / self.N_tot))
 
 
     # computes events' rates
