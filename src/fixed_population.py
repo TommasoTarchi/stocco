@@ -33,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('--m', type=int, default=m_deflt)
     parser.add_argument('--N_c', type=int, default=N_c_deflt)
     parser.add_argument('--epsilon', type=float, default=epsilon_deflt)
-    parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'static_mount', 'dynamic'], default=fitness_deflt)
+    parser.add_argument('--fitness', choices=['flat', 'static_inc', 'static_dec', 'static_mount', 'dynamic', 'dynamic_dec'], default=fitness_deflt)
     parser.add_argument('--datafile', default=datafile_deflt)
     parser.add_argument('--output', choices=['screen', 'time', 'final_state'], default=output_deflt)
 
@@ -72,6 +72,12 @@ if __name__ == "__main__":
                                                 # part is computed at the beginning
                                                 # of each iteration of the main
                                                 # loop
+    elif args.fitness == 'dynamic_dec':   # dynamic fitness with static decreasing 
+                                          # contribute
+        f += 0.01
+        for i in range(m):
+            f[i] = f[i]**(m-i-1)
+
 
     mu = np.full(m, 1/N)   # mutation rate distribution
 
@@ -103,7 +109,7 @@ if __name__ == "__main__":
                               # at this iteration
 
         # computing the dynamic component of the fitness
-        if args.fitness == 'dynamic':
+        if args.fitness == 'dynamic' or args.fitness == 'dynamic_dec':
             x_rate = x[:m_temp]/N
             f_part += np.ones(m_temp)
             for i in range(m_temp):

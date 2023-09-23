@@ -1,9 +1,10 @@
-- Use random.Generator to generate random variables (as suggested in numpy documentation)
-
 - Far notare che si è risparmiato lo spazio del vettore (matrice) v e che si è usato un 
 algoritmo ricorsivo per calcolare la reazione avvenuta in Gillespie
 
 - Spiegare bene tutti tipi di fitness landscape
+
+- Far notare che sarebbe interessante studiare il caso con fitness static\_dec + dynamic, per 
+vedere se la spinta data dalla competizione sia sufficiente a spingere 
 
 - Idea generale:
   - comparazione di risultati ed efficienza di algoritmi esatto e ibrido usando fixed population 
