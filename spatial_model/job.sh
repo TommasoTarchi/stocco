@@ -21,7 +21,7 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/data_ngb.csv
+datafile=$(pwd)/data.csv
 
 echo "# data for final state of spatial model to check mutual influence" > "$datafile"
 echo "# among neighbour areas' distributions" >> "$datafile"
