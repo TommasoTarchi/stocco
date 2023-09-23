@@ -5,7 +5,7 @@ import numpy as np
 
 
 # Read the CSV file into a Pandas DataFrame
-datafile = 'data_m4.csv'
+datafile = 'data.csv'
 df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
 
 

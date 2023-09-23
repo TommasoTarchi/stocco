@@ -23,7 +23,7 @@ conda activate stoch_modelling
 export OMP_NUM_THREADS=10
 
 
-datafile=$(pwd)/data_m4.csv
+datafile=$(pwd)/data.csv
 
 echo "# data for comparison between different fitness landscapes with" > "$datafile"
 echo "# hybrid algorithm" >> "$datafile"
