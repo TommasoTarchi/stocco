@@ -446,11 +446,11 @@ class world_w_neighbours:
                         x_adj[j] += self.x[ngb_id][j] // 4
             x_adj[x_adj < 0] = 0   # to avoid negative rates
 
-            a = compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
-            #a /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
-            a /= (1+len(self.neigh[i])/4)
+            a_id = compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
+            #a_id /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
+            a_id /= (1+len(self.neigh[i])/4)
 
-            self.a.append(a) 
+            self.a.append(a_id) 
 
 
     # partitioning the set of events in non-critical and critical ones
