@@ -50,7 +50,7 @@ for i in range(len(fitness_labels)):
     # Convert the values to a list of floats
     numeric_freq = [float(val) for val in freq][:4]
 
-    freq_dict = dict(zip(classes, numeric_freq))
+#    freq_dict = dict(zip(classes, numeric_freq))
 
     plt.subplot(2, 3, i+1)
 
@@ -62,6 +62,27 @@ for i in range(len(fitness_labels)):
     plt.ylabel('population')
     plt.title(fitness_labels[i])
     plt.legend()
+
+
+datafile = 'data_dyndec.csv'
+df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)
+data = df[["dynamic_dec_state"]]
+
+selected_row = data.iloc[row_index]
+freq = selected_row["dynamic_dec_state"].strip('[]')
+freq = freq.split()
+
+numeric_freq = [float(val) for val in freq][:4]
+
+plt.subplot(2, 3, 6)
+
+plt.bar(classes, numeric_freq, tick_label=classes.tolist())
+
+plt.xlabel('genotipic class')
+plt.ylabel('population')
+plt.title("static decreasing + dynamic")
+plt.legend()
+
 
 plt.tight_layout()
 

@@ -24,7 +24,7 @@ echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# population size: 10000" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "dynamic_dec_elpsd,dynamic_dec_state" >> "$datafile"
+echo "dynamic_dec_simul,dynamic_dec_elpsd,dynamic_dec_state" >> "$datafile"
 for index in {1..20}
 do
     python3 ../src/fixed_population.py --m 4 --N 10000 --fitness "dynamic_dec" --output "final_state" --datafile "$datafile"

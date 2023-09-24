@@ -447,7 +447,8 @@ class world_w_neighbours:
             x_adj[x_adj < 0] = 0   # to avoid negative rates
 
             a = compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
-            a /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
+            #a /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
+            a /= (1+len(self.neigh[i])/4)
 
             self.a.append(a) 
 

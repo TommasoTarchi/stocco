@@ -2,7 +2,7 @@
 # number of genotipic classes: 4
 # population size: 10000
 # 
-dynamic_dec_elpsd,dynamic_dec_state
+dynamic_dec_simul,dynamic_dec_elpsd,dynamic_dec_state
 50.19726677155475,0.3179950714111328,[1.198e+03 0.000e+00 3.129e+03 5.672e+03 1.000e+00]
 45.93534085305975,0.2972400188446045,[6.087e+03 5.000e+00 2.908e+03 9.990e+02 1.000e+00]
 63.334818487364,0.41411423683166504,[6.078e+03 1.100e+01 3.405e+03 5.050e+02 1.000e+00]
