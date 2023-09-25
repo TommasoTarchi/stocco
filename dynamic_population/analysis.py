@@ -115,6 +115,7 @@ plt.plot(time, N, label='N_4', linestyle='--')
 plt.plot(time_max, N_tilde_max, label='N_tilde', linestyle='-')
 
 # Set labels and title
+plt.ylim(7000, 12000)
 plt.xlabel('simulation time')
 plt.ylabel('population size')
 plt.title('Population in spatial model with fixed N_tilde')

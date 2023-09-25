@@ -109,7 +109,7 @@ if __name__ == "__main__":
         # applying Gillespie's algorithm
         #if h_index < resolution:
         #    wrld.Gillespie_apply(h_index)
-        if mid_e < tau:
+        if mid_e < tau:   # heuristic error fixing
             wrld.Gillespie_apply(h_index)
 
 

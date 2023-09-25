@@ -425,8 +425,6 @@ class world_w_neighbours:
         self.mu = []
         for i in range(self.resolution):
             self.mu.append(np.full(self.m, 1 / self.N[i]))
-            #self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
-            #self.mu.append(np.full(self.m, 1 / self.N_tot))
 
 
     # computes events' rates
@@ -436,8 +434,6 @@ class world_w_neighbours:
         
         for i in range(self.resolution):
             
-            #N_tilde_adj = N_tilde * (1+len(self.neigh[i])/4)   # N_tilde adjusted depending on the 
-                                                               # number of neighbours
             # distribution of population in genotipic space adjusted depending on the neighbours' 
             # distributions (the contribute of the neighbours is reduced of a factor 4)
             x_adj = self.x[i][:self.m_temp[i]].copy()
@@ -456,9 +452,6 @@ class world_w_neighbours:
                 norm_death += self.N[ngb_id] / 4
             norm_death /= self.N[i]
             a_id[self.m_temp[i]:] /= norm_death
-            
-            #a_id /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
-            #a_id /= (1+len(self.neigh[i])/4)
 
             self.a.append(a_id) 
 
