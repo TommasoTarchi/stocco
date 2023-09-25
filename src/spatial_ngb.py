@@ -97,7 +97,8 @@ if __name__ == "__main__":
         e = wrld.compute_e(tau)
 
         e_copy = e.copy()
-        e_copy.remove(tau+1)
+        if tau+1 in e_copy:
+            e_copy.remove(tau+1)
         mid_e = min(e_copy) + (max(e_copy)-min(e_copy)) / 2
         
         e.append(tau)
