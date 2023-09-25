@@ -95,7 +95,11 @@ if __name__ == "__main__":
 
         # computing time to next critical event
         e = wrld.compute_e(tau)
-        mid_e = (max(e)-min(e)) / 2
+
+        e_copy = e.copy()
+        e_copy.remove(tau+1)
+        mid_e = (max(e_copy)-min(e_copy)) / 2
+        
         e.append(tau)
         h = min(e)
         h_index = e.index(h)
