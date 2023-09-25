@@ -41,6 +41,6 @@ norm = np.max(avgs)
 avgs /= norm
 
 plt.imshow(avgs, cmap='Blues', vmin=0, vmax=1)
-plt.colorbar()  # Add a colorbar for reference
+#plt.colorbar()  # Add a colorbar for reference
 plt.title("Average genotipic class on each area")
 plt.savefig("genotipes.png")
