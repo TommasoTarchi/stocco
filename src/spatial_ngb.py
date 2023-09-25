@@ -95,13 +95,16 @@ if __name__ == "__main__":
 
         # computing time to next critical event
         e = wrld.compute_e(tau)
+        mid_e = (max(e)-min(e)) / 2
         e.append(tau)
         h = min(e)
         h_index = e.index(h)
 
         
         # applying Gillespie's algorithm
-        if h_index < resolution:
+        #if h_index < resolution:
+        #    wrld.Gillespie_apply(h_index)
+        if mid_e < tau:
             wrld.Gillespie_apply(h_index)
 
 
