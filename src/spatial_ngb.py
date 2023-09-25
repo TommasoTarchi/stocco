@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
         e_copy = e.copy()
         e_copy.remove(tau+1)
-        mid_e = (max(e_copy)-min(e_copy)) / 2
+        mid_e = min(e_copy) + (max(e_copy)-min(e_copy)) / 2
         
         e.append(tau)
         h = min(e)
