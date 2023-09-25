@@ -424,8 +424,9 @@ class world_w_neighbours:
 
         self.mu = []
         for i in range(self.resolution):
+            self.mu.append(np.full(self.m, self.resolution / self.N)
             #self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
-            self.mu.append(np.full(self.m, 1 / self.N_tot))
+            #self.mu.append(np.full(self.m, 1 / self.N_tot))
 
 
     # computes events' rates
@@ -435,7 +436,7 @@ class world_w_neighbours:
         
         for i in range(self.resolution):
             
-            N_tilde_adj = N_tilde * (1+len(self.neigh[i])/4)   # N_tilde adjusted depending on the 
+            #N_tilde_adj = N_tilde * (1+len(self.neigh[i])/4)   # N_tilde adjusted depending on the 
                                                                # number of neighbours
             # distribution of population in genotipic space adjusted depending on the neighbours' 
             # distributions (the contribute of the neighbours is reduced of a factor 4)
@@ -446,9 +447,17 @@ class world_w_neighbours:
                         x_adj[j] += self.x[ngb_id][j] // 4
             x_adj[x_adj < 0] = 0   # to avoid negative rates
 
-            a_id = compute_rates_dyn_pop(x_adj, N_tilde_adj, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
+            a_id = compute_rates_dyn_pop(x_adj, N_tilde, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
+
+            norm_birth = self.N[i]
+            for ngb_id in self.neigh[i]:
+                norm_birth += self.N[ngb_id] / 4
+            norm_birth /= self.N[i]
+
+            a_id[self.m_temp[i]:2*self.m_temp[i]] /= norm_birth
+            
             #a_id /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
-            a_id /= (1+len(self.neigh[i])/4)
+            #a_id /= (1+len(self.neigh[i])/4)
 
             self.a.append(a_id) 
 
