@@ -449,12 +449,13 @@ class world_w_neighbours:
 
             a_id = compute_rates_dyn_pop(x_adj, N_tilde, self.f[:self.m_temp[i]], self.mu[i][:self.m_temp[i]])
 
-            norm_birth = self.N[i]
+            # 'renormalization' of death and mutation rates (needed to keep 
+            # total population controlled)
+            norm_death = self.N[i]
             for ngb_id in self.neigh[i]:
-                norm_birth += self.N[ngb_id] / 4
-            norm_birth /= self.N[i]
-
-            a_id[self.m_temp[i]:2*self.m_temp[i]] /= norm_birth
+                norm_death += self.N[ngb_id] / 4
+            norm_death /= self.N[i]
+            a_id[self.m_temp[i]:] /= norm_death
             
             #a_id /= (1+len(self.neigh[i])/4) / self.resolution   # 'renormalization' of the rates
             #a_id /= (1+len(self.neigh[i])/4)
