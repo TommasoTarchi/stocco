@@ -12,7 +12,7 @@ df = pd.read_csv('data_spatial.csv', comment='#', skip_blank_lines=True).dropna(
 plt.figure(figsize=(10, 6))
 
 # Use the boxplot() method on the DataFrame
-df.boxplot(column=["base_elpsd", "4_elpsd", "16_elpsd", "36_elpsd", "64_elpsd", "100_elpsd"])
+df.boxplot(column=["base_elpsd", "4_elpsd", "16_elpsd", "25_elpsd", "36_elpsd"])
 
 # Set labels and title
 #plt.xlabel("")
@@ -27,7 +27,7 @@ plt.savefig("eff_spatial.png")
 plt.figure(figsize=(10, 6))
 
 # Use the boxplot() method on the DataFrame
-df.boxplot(column=["base_simul", "4_simul", "16_simul", "36_simul", "64_simul", "100_simul"])
+df.boxplot(column=["base_simul", "4_simul", "16_simul", "25_simul", "36_simul"])
 
 # Set labels and title
 #plt.xlabel("")
