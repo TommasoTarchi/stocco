@@ -424,7 +424,7 @@ class world_w_neighbours:
 
         self.mu = []
         for i in range(self.resolution):
-            self.mu.append(np.full(self.m, self.resolution / self.N))
+            self.mu.append(np.full(self.m, 1 / self.N[i]))
             #self.mu.append(np.full(self.m, 1/((self.N_tot/self.resolution)*(1+len(self.neigh[i])/4))))
             #self.mu.append(np.full(self.m, 1 / self.N_tot))
 
