@@ -76,7 +76,7 @@ if __name__ == "__main__":
                                           # contribute
         f += 0.01
         for i in range(m):
-            f[i] = f[i]**(m-i-1)
+            f[i] = f[i]**(m-i)
 
 
     mu = np.full(m, 1/N)   # mutation rate distribution
