@@ -115,7 +115,7 @@ if __name__ == "__main__":
             for i in range(m_temp):
                 for j in range(m_temp):
                     #f_part[i] -= x_rate[j] * (m-math.fabs(i-j))/m
-                    f_part[i] -= x_rate[j] * math.exp(-math.fabs(i-j))
+                    f_part[i] -= 0.5 * x_rate[j] * math.exp(-math.fabs(i-j))
 
 
         # computing the events' rates
