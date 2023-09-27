@@ -116,8 +116,6 @@ if __name__ == "__main__":
                 for j in range(m_temp):
                     f_part[i] -= 0.01 * x_rate[j] * math.exp(-math.fabs(i-j))
 
-        print(f_part)
-
 
         # computing the events' rates
         a = stclb.compute_rates(x[:m_temp], f_part, mu[:m_temp])
