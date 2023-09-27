@@ -114,7 +114,8 @@ if __name__ == "__main__":
             f_part += np.ones(m_temp)
             for i in range(m_temp):
                 for j in range(m_temp):
-                    f_part[i] -= x_rate[j] * (m-math.fabs(i-j))/m
+                    #f_part[i] -= x_rate[j] * (m-math.fabs(i-j))/m
+                    f_part[i] -= x_rate[j] * math.exp(-math.fabs(i-j))
 
 
         # computing the events' rates
