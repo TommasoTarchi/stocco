@@ -66,7 +66,7 @@ if __name__ == "__main__":
     elif args.fitness == 'static_dec':   # static decreasing fitness landscape
         f += 0.01
         for i in range(m):
-            f[i] = f[i]**(m-i-1)
+            f[i] = f[i]**(m-i)
     elif args.fitness == 'static_mount':   # static 'mountain' fitness landscape
         f += 0.01
         for i in range(m):
@@ -119,17 +119,16 @@ if __name__ == "__main__":
             N_tilde = 10e7 * N_0 * ex / (10e7 + N_0*ex - 1)
 
 
-        f_part = f[:m_temp]   # fitness values that will be actually used
-                              # at this iteration
+        f_part = f[:m_temp].copy()   # fitness values that will be actually
+                                     # used at this iteration
 
         # computing the dynamic component of the fitness
         if fitness == 'dynamic':
             x_rate = x[:m_temp]/N
-            f_part += np.ones(m_temp)
+            f_part += np.full(m_temp, 0.1)
             for i in range(m_temp):
                 for j in range(m_temp):
-                    #f_part[i] -= x_rate[j] * (m-math.fabs(i-j)) / m
-                    f_part[i] -= 0.5 * x_rate[j] * math.exp(-math.fabs(i-j))
+                    f_part[i] -= 0.01 * x_rate[j] * math.exp(-math.fabs(i-j))
 
 
         # computing the events' rates

@@ -19,7 +19,7 @@ export OMP_NUM_THREADS=10
 
 datafile=$(pwd)/data_dyndec.csv
 
-echo "#" >> "$datafile"
+echo "#" > "$datafile"
 echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# population size: 10000" >> "$datafile"
 echo "# " >> "$datafile"
