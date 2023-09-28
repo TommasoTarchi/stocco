@@ -13,7 +13,7 @@ df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).re
 plt.figure(figsize=(10, 6))  # Optional: Set the figure size
 
 # Use the boxplot() method on the DataFrame
-df.boxplot(column=["flat_simul", "static_inc_simul", "static_mount_simul", "dynamic_simul"])
+df.boxplot(column=["flat_simul", "static_inc_simul", "static_mount_simul", "static_mount+dynamic_simul"])
 
 # Set labels and title
 #plt.xlabel("")
@@ -24,7 +24,7 @@ plt.title("Simulation time with dynamic population and different fitness landsca
 plt.savefig("simul_time.png")
 
 
-data = df[["flat_state", "static_inc_state", "static_dec_state", "static_mount_state", "dynamic_state"]]
+data = df[["flat_state", "static_inc_state", "static_dec_state", "static_mount_state", "static_mount+dynamic_state"]]
 
 # Create a boxplot to compare the four quantities
 plt.figure(figsize=(12, 6))  # Optional: Set the figure size
@@ -36,7 +36,7 @@ row_index = 7   # "cherrypicked"
 selected_row = data.iloc[row_index]
 
 # defining class labels
-fitness_names = ["flat_state", "static_inc_state", "static_dec_state", "static_mount_state", "dynamic_state"]
+fitness_names = ["flat_state", "static_inc_state", "static_dec_state", "static_mount_state", "static_mount+dynamic_state"]
 fitness_labels = ["flat", "static increasing", "static decreasing", "static 'mountain'", "static 'mountain' + dynamic"]
 
 # Create an array of class labels
@@ -63,6 +63,8 @@ for i in range(len(fitness_labels)):
     plt.title(fitness_labels[i])
     plt.legend()
 
+
+row_index = 2
 
 datafile = 'data_dyndec.csv'
 df = pd.read_csv(datafile, comment='#', skip_blank_lines=True).dropna(axis=0).reset_index(drop=True)

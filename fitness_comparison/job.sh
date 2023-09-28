@@ -32,7 +32,7 @@ echo "# number of genotipic classes: 4" >> "$datafile"
 echo "# population size: 10000" >> "$datafile"
 echo "# " >> "$datafile"
 
-echo "flat_simul,flat_elpsd,flat_state,static_inc_simul,static_inc_elpsd,static_inc_state,static_dec_simul,static_dec_elpsd,static_dec_state,static_mount_simul,static_mount_elpsd,static_mount_state,dynamic_simul,dynamic_elpsd,dynamic_state" >> "$datafile"
+echo "flat_simul,flat_elpsd,flat_state,static_inc_simul,static_inc_elpsd,static_inc_state,static_dec_simul,static_dec_elpsd,static_dec_state,static_mount_simul,static_mount_elpsd,static_mount_state,static_mount+dynamic_simul,static_mount+dynamic_elpsd,static_mount+dynamic_state" >> "$datafile"
 for index in {1..20}
 do
     python3 ../src/fixed_population.py --m 4 --N 10000 --fitness "flat" --output "final_state" --datafile "$datafile"
