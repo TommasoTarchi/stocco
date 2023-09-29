@@ -422,6 +422,13 @@ class world_w_neighbours:
 
     def compute_mu(self):
 
+        ###
+        ###
+        ### WRONG: the mutation rate should be computed dividing by the 
+        ### total population, not the population of each area
+        ###
+        ###
+
         self.mu = []
         for i in range(self.resolution):
             self.mu.append(np.full(self.m, 1 / self.N[i]))
