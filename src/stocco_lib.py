@@ -424,8 +424,10 @@ class world_w_neighbours:
 
         self.mu = []
         for i in range(self.resolution):
-            #self.mu.append(np.full(self.m, 1 / self.N[i]))
-            self.mu.append(np.full(self.m, 1 / self.N_tot))
+            self.mu.append(np.full(self.m, 1 / self.N[i]))   # WRONG!!!
+            #self.mu.append(np.full(self.m, 1 / self.N_tot))   # correct, but feasible
+                                                               # only with large computational
+                                                               # resources
 
 
     # computes events' rates
