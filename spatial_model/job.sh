@@ -1,8 +1,9 @@
 #!/bin/bash
 
 
-###
-###
+### script to run one simulation with spatial algorithm to investigate the 
+### final genotipic distribution in space on Orfeo, cluster hosted at Area 
+### Science Park (Trieste, Italy)
 
 
 #SBATCH --no-requeue

@@ -1,6 +1,14 @@
 #!/bin/bash
 
 
+### script to run several simulations with hybrid algorithms and different fitness
+### landscapes on Orfeo, cluster hosted at Area Science Park (Trieste, Italy)
+###
+### number of genotipic classes = 4
+###
+### complement to job.sh in this directory
+
+
 #SBATCH --no-requeue
 #SBATCH --job-name="fitness_comparison"
 #SBATCH --partition=EPYC
