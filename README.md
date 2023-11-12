@@ -1,8 +1,8 @@
 # Stocco
 
 This is **Stocco**, final project for the exam Stochastic Modelling and Simulation from MSc in Data Science and Scientific Computing 
-at University of Trieste/SISSA. The base model was taken from [this paper](Zhu-Efficient_simul_population_model_carcinogenesis.pdf),
-and my contribute consisted in adding a competition model and a spatial structure.
+at University of Trieste/SISSA. I took the base model from [this paper](Zhu-Efficient_simul_population_model_carcinogenesis.pdf),
+and my contribute consisted in adding competition and a spatial structure.
 
 For an overview of the whole project see [this presentation](Stocco-Presentation.pdf).
 
@@ -10,7 +10,8 @@ For an overview of the whole project see [this presentation](Stocco-Presentation
 because of that, please consider the results on waiting time and efficiency of spatiotemporal algorithms when varying resolution to
 be wrong.
 
-**Note**: some of the data in CSV files are not the same used in the slide presentation; the reason is that I ran some additional tests after I had already written the presentation. However, the results are coherent.
+**Note**: some of the data in CSV files are not the same used in the slide presentation; the reason is that I ran some additional 
+tests after I had already written the presentation. However, the results are coherent.
 
 
 ## What you will find in this repository
