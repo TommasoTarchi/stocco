@@ -1,8 +1,8 @@
 # Stocco
 
 This is **Stocco**, final project for the exam Stochastic Modelling and Simulation from MSc in Data Science and Scientific Computing 
-at University of Trieste/SISSA. I took the base model from [this paper](Zhu-Efficient_simul_population_model_carcinogenesis.pdf),
-and my contribute consisted in adding competition and a spatial structure.
+at University of Trieste/SISSA. I took the base model from [this paper][link1], by Tianqi Zhu, Yucheng Hu, Zhi-Ming Ma, De-Xing Zhang,
+Tiejun Li and Ziheng Yang. My contribute consisted in adding competition and a spatial structure.
 
 For an overview of the whole project see [this presentation](Stocco-Presentation.pdf).
 
@@ -17,7 +17,6 @@ tests after I had already written the presentation. However, the results are coh
 ## What you will find in this repository
 
 - This README file
-- `Zhu-Efficient_simul_population_model_carcinogenesis.pdf`: paper used as basis for the project
 - `Stocco-Presentation.pdf`: slide presentation of the project
 - `src/`: directory containing all python codes used to run the simulations; contains:
   - `stocco_lib.py`: library containing all functions used for the simulations
@@ -32,3 +31,12 @@ tests after I had already written the presentation. However, the results are coh
   actually able to control the population size
 - `spatial_model/`: directory containing results for final average genotype distribution in spatial model
 - `fitness_graphs/`: directory containing scripts for graphs (not interesting)
+
+
+## References
+
+Tianqi Zhu, Yucheng Hu, Zhi-Ming Ma, De-Xing Zhang, Tiejun Li, Ziheng Yang, Efficient simulation under a population genetics model of carcinogenesis, Bioinformatics, Volume 27, Issue 6, March 2011, Pages 837–843, [https://doi.org/10.1093/bioinformatics/btr025][link1].
+
+
+
+[link1]: https://doi.org/10.1093/bioinformatics/btr025
