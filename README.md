@@ -35,7 +35,7 @@ tests after I had already written the presentation. However, the results are coh
 
 ## References
 
-Tianqi Zhu, Yucheng Hu, Zhi-Ming Ma, De-Xing Zhang, Tiejun Li, Ziheng Yang, Efficient simulation under a population genetics model of carcinogenesis, Bioinformatics, Volume 27, Issue 6, March 2011, Pages 837–843, [https://doi.org/10.1093/bioinformatics/btr025][link1].
+- Tianqi Zhu, Yucheng Hu, Zhi-Ming Ma, De-Xing Zhang, Tiejun Li, Ziheng Yang, Efficient simulation under a population genetics model of carcinogenesis, Bioinformatics, Volume 27, Issue 6, March 2011, Pages 837–843, [https://doi.org/10.1093/bioinformatics/btr025][link1].
 
 
 
